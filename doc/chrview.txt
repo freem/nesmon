@@ -1,0 +1,53 @@
+CHR Data Viewer/Editor ("chrview")
+==================================
+chrview is a CHR data viewer and editor.
+The editor functions will only work with CHR-RAM.
+
+Interface
+=========
+
+Here is an ASCII diagram of the interface:
+--------------------------------
+     CHR DATA VIEWER/EDITOR
+--------------------------------
+ /----------------\/--------\
+ |                ||        |
+ |                ||        |
+ |                ||        |
+ |                ||  tile  |
+ |                || editor |
+ |                ||        |
+ |                ||        |
+ |      tile      ||        |
+ |      list      |\--------/
+ |                |
+ |                | PIXEL COLOR
+ |                |
+ |                |  0  1  2  3
+ |                | [] [] [] []
+ |                | [] [] [] []
+ |                |
+-+----------------+-------------
+ COLORS   HFLIP  CUT    ???????
+ CHRBANK  VFLIP  COPY   OPTION
+ SWAPCOL  CLEAR  PASTE  EXIT
+--------------------------------
+
+"Tile list" contains each of the possible 256 tiles in the active bank.
+"Tile editor" allows you to view and edit the tile at 8x resolution.
+"Pixel Color" allows you to pick the active brush color.
+
+The Main Menu:
+* Colors       Change the active color set
+* CHRBANK      Swap the active CHR bank (User interface may appear wrong)
+* SWAPCOL      Swap colors for the active tile
+* HFlip        Horizontally flip the current tile
+* VFlip        Vertically flip the current tile
+* Clear        Clear the current tile
+* Cut          Copies the current tile to the clipboard and clears the entry
+* Copy         Copies the current tile to the clipboard
+* Paste        Pastes the current tile from the clipboard
+* ???????      (currently undefined option)
+* Option       chrview Options
+* Exit         Exit chrview (back to monitor)
+
