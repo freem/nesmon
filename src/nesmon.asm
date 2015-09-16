@@ -34,29 +34,53 @@
 .endif
 
 ;==============================================================================;
-; Program Code
+; [Program Code]
 ; The limitations of current emulators means that we need to throw at least one
-; full 16K bank into a ROM. No, I don't want to do what Galaxian does. Fuck that.
+; full 16K bank into a ROM. No, I don't want to do what Galaxian does.
 
 ; I am really hoping my code doesn't expand too much, but it is a bit more
 ; complicated than just a bootloader.
 
 .org $C000
 
-; the vectors
+;------------------------------------------------------------------------------;
+; pretty important!
 .include "nmi.asm"
 .include "irq.asm"
 .include "reset.asm"
 
+;------------------------------------------------------------------------------;
 ; character set
 .include "charsets_1bpp/charset.asm"
 
+;------------------------------------------------------------------------------;
 ; general system routines
 .include "routines_ppu.asm"
 .include "routines_io.asm"
 
-; nesmon modules
+;------------------------------------------------------------------------------;
+; keyboard routines
+.include "input/kb_soft.asm" ; always include software keyboard
+
+.ifndef KB_FAMIBASIC
+	.ifndef KB_SUBOR
+		.error "At least one hardware keyboard (KB_FAMIBASIC, KB_SUBOR) must be enabled."
+	.endif
+.endif
+
+; caveat: only use one hardware keyboard at a time
+.ifdef KB_FAMIBASIC
+	.include "input/kb_famibasic.asm"
+.else
+	.ifdef KB_SUBOR
+	.include "input/kb_subor.asm"
+	.endif
+.endif
+
+;------------------------------------------------------------------------------;
+; nesmon default modules
 .include "modules/microasm.asm"
+.include "modules/editor.asm"
 
 ;==============================================================================;
 ; Vectors
