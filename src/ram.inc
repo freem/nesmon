@@ -18,6 +18,7 @@
 	tmp05               .dsb 1
 	tmp06               .dsb 1
 	tmp07               .dsb 1
+
 	; $08-$0F: nesmon system-specific
 	inMonitor           .dsb 1		; ($08) is the monitor active?
 	int_PC              .dsw 1		; ($09,$0A) internal copy of program counter
@@ -36,16 +37,29 @@
 OAM_BUF = $0200 ; unless otherwise specified...
 
 ;==============================================================================;
-; $0300
-
-;==============================================================================;
-; $0400
-
-;==============================================================================;
-; $0500
-
-;==============================================================================;
-; $0600
+; $0300-$06FF are free to modify; that gives you 1K (1024 bytes).
 
 ;==============================================================================;
 ; $0700
+; This page is reserved for nesmon.
+
+.enum $0700
+	; [editor related]
+	; -- editor display logic --
+	curLineNum          .dsb 1		; current input line number
+	curScrollY          .dsb 1		; current Y scroll
+	; -- visual cursor --
+	cursorDispX         .dsb 1		; cursor X pos
+	cursorDispY         .dsb 1		; cursor Y pos
+	cursorBlink         .dsb 1		; is cursor blinking
+	; -- current input line --
+	cursorX             .dsb 1		; current X pos within current line
+	curLineEnd          .dsb 1		; input line end
+	curNumChars         .dsb 1		; current number of characters in buffer
+	curLineBuf          .dsb 30		; current input line text buffer
+
+	; [nesmon vram buffer]
+	; 64 bytes?
+	; The worst case (vram addr,length=1,tile) for all entries = 16 tiles
+	; The best case (vram addr,length=61,data) = 61 tiles
+.ende
