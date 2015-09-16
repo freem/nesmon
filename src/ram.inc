@@ -28,8 +28,12 @@
 	int_regStatus       .dsb 1		; ($0E) internal copy of status
 	int_regSP           .dsb 1		; ($0F) internal copy of stack pointer location
 
-	; I really hope I don't need any more zero page variables for nesmon, but
-	; if I do, they'll start from $10.
+	; $10-$??: nesmon system-specific (high priority)
+	vblanked            .dsb 1		; ($10)
+	runNormalVBuf       .dsb 1		; ($11)
+	vramBufWritePos     .dsb 1		; ($12)
+	; I would like to stop this at $1F (at most), but preferably before.
+
 .ende
 
 ;==============================================================================;
@@ -55,7 +59,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	int_scrollY         .dsb 1		; internal copy of PPU_SCROLL write 2
 	cartPRGRAM          .dsb 1		; cart PRG RAM status
 	activeKBType        .dsb 1		; current keyboard type (0=software, 1=hardware)
-	;hardKBType          .dsb 1		; future variable for hardware keyboard type (0=HVC-007; 1=Subor)
+	hardKBType          .dsb 1		; (future) variable for hardware keyboard type (0=HVC-007; 1=Subor)
 
 	; [editor related]
 	; -- editor display logic -- { 3 bytes }
@@ -86,14 +90,17 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	hardkbShift         .dsb 1		; hardware keyboard shift key status
 	hardkbCtrl          .dsb 1		; hardware keyboard ctrl key status
 	hardkbAltGr         .dsb 1		; hardware keyboard alt/graphics key status
+.ende
 
+.enum $0780
 	;--------------------------------------------------------------------------;
-	; [nesmon module RAM] {64? bytes}
+	; [nesmon module RAM] {64 bytes}
 	; Each module is going to need its own RAM space.
-	;moduleRAM           .dsb 64
+	moduleRAM           .dsb 64
 
 	;--------------------------------------------------------------------------;
-	; [nesmon vram buffer] {64 bytes} (tentative)
+	; [nesmon vram buffer] {64 bytes}
+	vramBufData         .dsb 64
 	; calculations with 64 byte vram buffer:
 	; The worst case (vram addr,length=1,tile) for all entries = 16 tiles
 	; best case single (vram addr,length=61,data) = 61 tiles

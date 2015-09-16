@@ -109,9 +109,20 @@ cartType:
 .endif
 
 ;------------------------------------------------------------------------------;
-; nesmon default modules
-.include "modules/microasm.asm"
-.include "modules/editor.asm"
+; [nesmon default modules]
+.include "modules/editor.asm"    ; editor program (main interface)
+.include "modules/commands.asm"  ; command parser and handler
+.include "modules/microasm.asm"  ; micro 6502 assembler
+
+;------------------------------------------------------------------------------;
+; [nesmon optional modules]
+.ifndef WITHOUT_CHRVIEW
+.include "modules/chrview.asm"   ; CHR Viewer/Editor ("chrview") module
+.endif
+
+.ifndef WITHOUT_TAPE
+.include "modules/tapemod.asm"   ; Cassette tape module
+.endif
 
 ;==============================================================================;
 ; Vectors

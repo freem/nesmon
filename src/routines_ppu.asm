@@ -8,12 +8,12 @@
 ; Clears the specified nametable and attributes.
 
 ; xxx: this could probably be even simpler, if blargg's code is any indication.
-; xxx: My code handles tiles and attributes separately for some reason.
 
 ; Differences from freemco NES corelib:
 ; * Parameter moved from A to X.
 ; * Parameter now sets the upper PPU address byte, saving 4 bytes of ROM and
 ;   some awkward code.
+; * Attribute section no longer split from tiles.
 
 ; (Params)
 ; X            Upper byte of nametable address ($20,$24,$28,$2C)
@@ -26,22 +26,14 @@ ppu_clearNT:
 	lda #0
 	sta PPU_ADDR
 
-	; clear tiles
-	ldy #$C0
+	ldy #$FF
 	ldx #4
-@writeTiles:
+@writeData:
 	sta PPU_DATA
 	dey
-	bne @writeTiles
+	bne @writeData
 	dex
-	bne @writeTiles
-
-	; clear attrib
-	ldy #64
-@writeAttrib:
-	sta PPU_DATA
-	dey
-	bne @writeAttrib
+	bne @writeData
 
 	rts
 
@@ -51,7 +43,8 @@ ppu_clearNT:
 
 ; Differences from freemco NES corelib:
 ; * Parameter moved from A to X.
-; * X and Y are now set from A instead of immediates for a savings of 2 bytes.
+; * Loop counters in X and Y are now set from A instead of immediates for a
+;   savings of 2 bytes.
 
 ; xxx: could possibly be optimized further? (loop logic)
 
@@ -135,4 +128,281 @@ ppu_load1BPPCHR_c0:
 	cpx tmp02
 	bne @writeTiles1
 
+	rts
+
+;==============================================================================;
+ppu_WaitVBL:
+	bit PPU_STATUS
+	lda #1
+	sta vblanked
+@waitNMI:
+	lda vblanked
+	bne @waitNMI
+	rts
+
+;==============================================================================;
+
+
+;==============================================================================;
+; The VRAM Buffer
+;==============================================================================;
+; It seems like every project I make has different requirements. Since RAM
+; space on this project is at a premium, the VRAM Buffer design is going to be
+; slightly different than the successful Fire Simulator version.
+
+; addr1 addr2 sz/fl data
+; Mostly the same, but with one major difference: Size is now Size/Flags.
+
+; Size/Flags:
+; 00000000
+; ||_____|
+; |   |
+; |   |_____ Data length (0-127)
+; |_________ Repeat flag
+
+; If the Repeat flag is set, only one byte follows the data; it is repeated
+; until the length has been reached.
+
+; vramBufWritePos is the current index into vramBuf (where new data will go).
+;==============================================================================;
+; routine for full initialization of vram buffer
+vramBuf_Init:
+	jsr vramBuf_Reset
+	jmp vramBuf_Clear
+
+;==============================================================================;
+; vramBuf_Reset
+; Reset VRAM Buffer related variables.
+
+; (Clobbers)
+; A            Used for resetting vars
+
+vramBuf_Reset:
+	lda #0
+	sta vramBufWritePos
+	rts
+
+;==============================================================================;
+; vramBuf_Clear
+; Clear VRAM Buffer data.
+
+; (Clobbers)
+; A            Used for resetting vars
+; X            Used for indexing into vramBufData
+
+vramBuf_Clear:
+	; clear buffer data
+	lda #0
+	ldx #64
+@clearLoop:
+	sta vramBufData,x
+	dex
+	bne @clearLoop
+
+	rts
+
+;==============================================================================;
+; vramBuf_NewEntry
+; Initializing a new VRAM Buffer section (PPU address, data length)
+
+; Note: Does not check if adding a new item will exceed VRAM Buffer size.
+
+; (Params)
+; tmp00        PPU address high
+; tmp01        PPU address low
+; tmp02        Data length
+
+; (Clobbers)
+; A            Various loads
+; Y            Used for indexing into vramBufData
+
+vramBuf_NewEntry:
+	; get current buffer location
+	ldy vramBufWritePos
+
+	; write ppu addr hi
+	lda tmp00
+	sta vramBufData,y
+	iny
+	; write ppu addr lo
+	lda tmp01
+	sta vramBufData,y
+	iny
+	; write data length
+	lda tmp02
+	sta vramBufData,y
+
+	; update current buffer location
+	iny
+	sty vramBufWritePos
+
+	rts
+
+;==============================================================================;
+; vramBuf_AddFromPtr
+; Adds data from a pointer to the VRAM Buffer.
+
+; Note: Does not check if length of data will exceed VRAM Buffer size.
+
+; (Params)
+; tmp00,tmp01  Pointer to data to write
+; A            Length of data to write
+
+; (Clobbers)
+; X            Used for indexing into vramBufData
+; Y            Used for indexing into pointer
+
+vramBuf_AddFromPtr:
+	sta tmp02
+	ldx vramBufWritePos
+	ldy #0
+@writeLoop:
+	lda (tmp00),y
+	sta vramBufData,x
+	inx
+	iny
+	cpy tmp02
+	bne @writeLoop
+	stx vramBufWritePos
+	rts
+
+;==============================================================================;
+; vramBuf_AddByte
+; Adds a single byte to the VRAM Buffer.
+
+; Note: Does not check if length of data will exceed VRAM Buffer size.
+
+; (Params)
+; A            Byte to write
+
+; (Clobbers)
+; Y            Used for indexing into vramBufData
+
+vramBuf_AddByte:
+	; get current buffer location
+	ldy vramBufWritePos
+	; store byte
+	sta vramBufData,y
+	; update current buffer location
+	iny
+	sty vramBufWritePos
+	rts
+
+;==============================================================================;
+; vramBuf_AddFill (Different from Fire Simulator)
+; Adds a single byte to the VRAM Buffer a specified number of times.
+
+; Differences from Fire Simulator:
+; * Converted to use RLE (Flags $80)
+
+; Note: Does not check if length of data will exceed VRAM Buffer size.
+
+; (Params)
+; A           Byte to write
+; X           Number of times to write
+
+; (Clobbers)
+; Y            Used for indexing into vramBufData
+
+vramBuf_AddFill:
+	ldy vramBufWritePos
+	sta tmp01
+
+	; set RLE flag
+	txa
+	ora #$80
+	sta vramBufData,y
+
+	; set tile
+	iny
+	sta vramBufData,y
+
+	; update write position
+	iny
+	sty vramBufWritePos
+	rts
+
+;==============================================================================;
+; vramBuf_Transfer
+; Transfer data from the VRAM Buffer to the PPU.
+
+; It is very important that this routine be as simple as possible, in order to
+; maximize the amount of data we can send.
+
+; xxx: RLE is untested
+
+vramBuf_Transfer:
+	; check to see if we should run this
+	lda runNormalVBuf
+	bne @continue
+	rts
+
+@continue:
+	; start at the beginning of the buffer
+	ldy #0
+
+@nextSection:
+	; get ppu addr high
+	lda vramBufData,y
+	sta tmp00
+	iny
+
+	; check if ppu addr < $4000
+	cmp #$40
+	; if so, we are done handling writes for this frame.
+	bcc @end
+
+	; get ppu addr low
+	lda vramBufData,y
+	sta tmp01
+	iny
+
+	; get data length
+	lda vramBufData,y
+	sta tmp02
+	iny
+
+	; set new PPU address
+	lda tmp00
+	ldx tmp01
+	sta PPU_ADDR
+	stx PPU_ADDR
+
+	; check if this is rle
+	lda tmp02
+	bmi @doRLE
+
+	ldx #0
+@writeLoop:
+	; get byte
+	lda vramBufData,y
+	; write data to ppu
+	sta PPU_DATA
+	iny
+	; check loop logic for section
+	inx
+	cpx tmp02
+	bne @writeLoop
+	; jump back to top
+	beq @nextSection
+	bne @end
+
+@doRLE:
+	; get real length
+	and #$7F
+	tax
+@writeRLE:
+	; get and write byte
+	lda vramBufData,y
+	sta PPU_DATA
+	iny
+	; loop logic
+	dex
+	bne @writeRLE
+	; jump back to top
+	beq @nextSection
+
+@end:
+	lda #0
+	sta runNormalVBuf
 	rts

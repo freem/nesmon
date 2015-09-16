@@ -27,6 +27,20 @@ NMI:
 	; user mode NMI
 
 NMI_end:
+	; set scroll
+	ldx int_scrollX
+	ldy int_scrollY
+	stx PPU_SCROLL
+	sty PPU_SCROLL
+
+	; set mask
+	lda int_ppuMask
+	sta PPU_MASK
+
+	; done with the vblank
+	lda #0
+	sta vblanked
+
 	; restore regs
 	pla
 	tay
@@ -37,6 +51,18 @@ NMI_end:
 
 ;==============================================================================;
 MonitorNMI:
-	; todo: what to do here?
+	; transfer vram buffer
+	jsr vramBuf_Transfer
+
+	; reset vram buffer write pos
+	lda #0
+	sta vramBufWritePos
+
+	; reset ppu addresses
+	ldx #$3F
+	stx PPU_ADDR
+	sta PPU_ADDR
+	sta PPU_ADDR
+	sta PPU_ADDR
 
 	jmp NMI_end
