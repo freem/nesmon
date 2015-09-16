@@ -43,6 +43,31 @@
 
 .org $C000
 
+cartSignature:
+	;    ----------------
+	.db "NES MONITOR ROM "
+	.db "YYYYMMDD HH:MM" ; xxx: replace with generated build date and time
+	;    ----------------
+
+cartVersion:
+	; version information
+	.db $00
+	.db $00
+
+cartType:
+.ifdef NROM
+	;    ----------------
+	.db "NROM            "
+.endif
+.ifdef M100
+	;    ----------------
+	.db "Nintendulator100"
+.endif
+.ifdef FME7
+	;    ----------------
+	.db "FME-7           "
+.endif
+
 ;------------------------------------------------------------------------------;
 ; pretty important!
 .include "nmi.asm"
