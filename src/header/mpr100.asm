@@ -9,12 +9,13 @@
 .ignorenl
 	; Mirroring: 0=Horizontal, 1=Vertical
 	HDR_MIRRORING = 0
+	; Not permanent; you can change the mirroring and mapping on the fly.
 
 	; Battery-backed SRAM
 	HDR_BATTERY = 0
 
-	HDR_PRGRAM_SIZE
-	HDR_PRGRAMB_SIZE
+	;HDR_PRGRAM_SIZE
+	;HDR_PRGRAMB_SIZE
 .endinl
 ;==============================================================================;
 ; begin header
@@ -64,7 +65,7 @@
 	.db %00000111
 	;    |__||__|
 	;      |   |
-	;      |   |___ Non-battery backed CHR RAM
+	;      |   |___ Non-battery backed CHR RAM: (8K for now)
 	;      |_______ Battery backed CHR RAM
 
 	;Byte 12/TV System
