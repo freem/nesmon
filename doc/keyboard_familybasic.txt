@@ -31,12 +31,14 @@ Matrix
 
 Notes:
 * Return is labeled as "Enter" in this matrix.
+* "nocash bit" refers to the numbering used in the nocash documentation
 * $4017 means "$4017 bit number"
 
+nocash bit 3     2     1     0       7     6     5     4
 ------+ +-----+ Column  0 +-----+ +-----+ Column  1 +-----+
 $4017 | |  4  |  3  |  2  |  1  | |  4  |  3  |  2  |  1  |
 ------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
-Row 0 | |  ]  |  [  |Enter|  F8 | | STOP|¥ (\)|RShft| KANA|
+Row 0 | |  ]  |  [  |Enter|  F8 | | STOP|  ¥  |RShft| KANA|
 Row 1 | |  ;  |  :  |  @  |  F7 | |  ^  |  -  |  /  |  _  |
 Row 2 | |  K  |  L  |  O  |  F6 | |  0  |  P  |  ,  |  .  |
 Row 3 | |  J  |  U  |  I  |  F5 | |  8  |  9  |  N  |  M  |
@@ -51,13 +53,24 @@ Unshifted Key Layout
 ====================
 
  F1  F2  F3  F4  F5  F6  F7  F8 
- 1 2 3 4 5 6 7 8 9 0 - ^ \ STOP
+ 1 2 3 4 5 6 7 8 9 0 - ^ ¥ STOP
 ESC Q W E R T Y U I O P @ [ RETURN CLR INS DEL
  CTR A S D F G H J K L ; : ] KANA    Up
 SHIFT Z X C V B N M , . / _ SHIFT  Lf  Rt
       GRPH spacebar                  Dn
 
-(todo: shifted, graphics, kana layouts)
+Shifted Key Layout
+====================
+(not 100% confirmed)
+
+ F1  F2  F3  F4  F5  F6  F7  F8 
+ ! " # $ % & ' ( ) 0 = ^ ¥ STOP
+ESC Q W E R T Y U I O P @ [ RETURN CLR INS DEL
+ CTR A S D F G H J K L + * ] KANA    Up
+SHIFT Z X C V B N M < > ? _ SHIFT  Lf  Rt
+      GRPH spacebar                  Dn
+
+(todo: kana, graphics layouts)
 
 AVS Unshifted Key Layout
 ========================
@@ -76,3 +89,41 @@ ESC Q W E R T Y U I O P ß ¨ RETURN CLR INS DEL
  CTR A S D F G H J K L [ ] ¥ CAPS    Up
 SHIFT Z X C V B N M < > ? £ SHIFT  Lf  Rt
       GRPH spacebar                  Dn
+
+AVS Keyboard Matrices
+=====================
+{WARNING! SPECULATION AND PROBABLY NOT REAL}
+The big assumption here is that the keyboard matrix between the Family BASIC
+keyboard and the AVS keyboard are the same, and just the buttons have changed.
+
+(unshifted)
+nocash bit 3     2     1     0       7     6     5     4
+------+ +-----+ Column  0 +-----+ +-----+ Column  1 +-----+
+$4017 | |  4  |  3  |  2  |  1  | |  4  |  3  |  2  |  1  |
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
+Row 0 | |  ¥  |  *  |Enter|  F8 | | STOP|  ^  |RShft| CAPS|
+Row 1 | |  ;  |  :  |  ß  |  F7 | |  -  |  =  |  /  |  £  |
+Row 2 | |  k  |  l  |  O  |  F6 | |  0  |  p  |  ,  |  .  |
+Row 3 | |  j  |  u  |  i  |  F5 | |  8  |  9  |  n  |  m  |
+Row 4 | |  h  |  g  |  y  |  F4 | |  6  |  7  |  v  |  b  |
+Row 5 | |  d  |  r  |  t  |  F3 | |  4  |  5  |  c  |  f  |
+Row 6 | |  a  |  s  |  w  |  F2 | |  3  |  e  |  z  |  x  |
+Row 7 | | CTR |  q  | ESC |  F1 | |  2  |  1  | GRPH|LShft|
+Row 8 | | Left|Right|  Up | CLR | | INS | DEL |Space| Down|
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
+
+(shifted)
+nocash bit 3     2     1     0       7     6     5     4
+------+ +-----+ Column  0 +-----+ +-----+ Column  1 +-----+
+$4017 | |  4  |  3  |  2  |  1  | |  4  |  3  |  2  |  1  |
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
+Row 0 | |  ¥  |  ¨  |Enter|  F8 | | STOP|  ~  |RShft| CAPS|
+Row 1 | |  [  |  ]  |  ß  |  F7 | |  _  |  +  |  ?  |  £  |
+Row 2 | |  K  |  L  |  O  |  F6 | |  )  |  P  |  <  |  >  |
+Row 3 | |  J  |  U  |  I  |  F5 | |  @  |  (  |  N  |  M  |
+Row 4 | |  H  |  G  |  Y  |  F4 | |  &  |  '  |  V  |  B  |
+Row 5 | |  D  |  R  |  T  |  F3 | |  $  |  %  |  C  |  F  |
+Row 6 | |  A  |  S  |  W  |  F2 | |  #  |  E  |  Z  |  X  |
+Row 7 | | CTR |  Q  | ESC |  F1 | |  "  |  !  | GRPH|LShft|
+Row 8 | | Left|Right|  Up | CLR | | INS | DEL |Space| Down|
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
