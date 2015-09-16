@@ -2,7 +2,7 @@ nesmon Source Tree
 ==================
 
 charsets_1bpp/         1BPP character sets
-	charset.asm
+	charset.asm        Character set definition file (important!)
 	charset0.chr       Default character set
 	charset1.chr       Nintendo-style character set
 	charset2.chr       Compile-style character set
@@ -16,14 +16,17 @@ header/                NES 2.0 headers
 	mpr100.asm         Nintendulator Debug Mapper (Mapper 100)
 	nrom.asm           NROM (Mapper 000)
 
-input/                 Keyboard input code
-	(no files yet)
+input/                 Input code (Keyboards, etc.)
+	kb_famibasic.asm   Family BASIC keyboard
+	kb_soft.asm        Software keyboard
+	kb_subor.asm       Subor keyboard
 
 mapper/                Mapper-specific code
 	(no files yet)
 
-modules/
-	editor.asm         Screen editor routines
+modules/               nesmon Modules
+	commands.asm       Command handler
+	editor.asm         Editor routines
 	microasm.asm       Micro 6502 Assembler
 	tapemod.asm        Cassette tape routines
 
