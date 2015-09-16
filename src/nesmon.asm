@@ -50,6 +50,12 @@
 .include "reset.asm"
 
 ;------------------------------------------------------------------------------;
+; mapper routines (if needed)
+.ifdef FME7
+	.include "mapper/fme7.asm"
+.endif
+
+;------------------------------------------------------------------------------;
 ; character set
 .include "charsets_1bpp/charset.asm"
 
