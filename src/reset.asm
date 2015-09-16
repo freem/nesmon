@@ -174,6 +174,8 @@ Reset:
 	stx PPU_DATA
 .endr
 
+	; (the following parts assume Y is 0)
+
 	; reset ppu addresses
 	ldx #$3F
 	stx PPU_ADDR
@@ -188,10 +190,12 @@ Reset:
 	; turn on NMI; sprites and BG are on $0000 by default
 	lda #%10000000
 	sta PPU_CTRL
+	sta int_ppuCtrl
 
 	; don't enable sprites by default (yet); show every pixel
 	lda #%00001110
 	sta PPU_MASK
+	sta int_ppuMask
 
 ; xxx: should really jump into the monitor here
 ; temporary hack!!!
