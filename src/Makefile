@@ -1,5 +1,20 @@
 # nesmon Makefile
 ################################################################################
+# ============================================================================ #
+# /!\ CUSTOMIZATION SECTION /!\
+# ============================================================================ #
+
+# character set type (see doc/charsets.txt and src/charsets_1bpp/charset.asm)
+CHARSET_FLAG = CHARSET0
+
+# keyboard module (FAMIBASIC, SUBOR)
+# Currently, only one keyboard type can be supported in a binary.
+KEYBOARD_MODULE = FAMIBASIC
+
+# ============================================================================ #
+# /!\ END CUSTOMIZATION SECTION /!\
+# ============================================================================ #
+################################################################################
 # assembler to use
 AS = asm6f
 
@@ -15,17 +30,6 @@ OUTDIR = ../bin
 OUTFILE_NROM = nesmon_nrom.nes
 OUTFILE_M100 = nesmon_m100.nes
 OUTFILE_FME7 = nesmon_fme7.nes
-
-################################################################################
-# ============================================================================ #
-# /!\ CUSTOMIZATION SECTION /!\
-# ============================================================================ #
-
-# custom character set flag (see doc/charsets.txt and src/charsets_1bpp/charset.asm)
-CHARSET_FLAG = CHARSET0
-
-# keyboard module (FAMIBASIC, SUBOR)
-KEYBOARD_MODULE = FAMIBASIC
 
 ################################################################################
 .phony: all clean nrom m100 fme7
