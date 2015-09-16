@@ -156,12 +156,18 @@ Reset:
 	stx PPU_DATA
 	stx PPU_DATA
 
-	; xxx: BG3,4 and sprites are temporary
+	; BG3
+	sta PPU_DATA
+	sty PPU_DATA
+	sty PPU_DATA
+	sty PPU_DATA
+
+	; xxx: BG4 and sprite pals are temporary
 	ldx #$30
 
 	; I would rather keep Y as 0...
 	; (POSSIBLE SPACE OPTIMIZATION POINT)
-.rept 6
+.rept 5
 	sta PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
