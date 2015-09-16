@@ -1,0 +1,29 @@
+nesmon Variables
+================
+Detailed writings on nesmon-specific variables.
+
+================================================================================
+cartPRGRAM
+================================================================================
+Determines how much PRG-RAM is available for use.
+The checks in nesmon are not robust; they check the first byte of the region,
+and if a write succeeds, the whole region will be marked as RAM.
+
+00000000
+||||||||
+||||||||__ $5000-$5FFF (rarity)
+|||||||___ $6000-$7FFF
+||||||____ $8000-$9FFF
+|||||_____ $A000-$BFFF
+||||______ $C000-$DFFF
+|||_______ $E000-$FFFF
+||________ (reserved for mapper-specific RAM)
+|_________ (reserved for mapper-specific RAM)
+
+"reserved for mapper-specific RAM"
+----------------------------------
+Certain mappers have special types of RAM.
+
+* MMC5: 1024 bytes of on-chip RAM ($5C00-$5FFF)
+* MMC6: 1024 bytes of on-chip RAM ($7000-$7FFF, mirrored)
+* Namco 163: 128 bytes of wavetable RAM (can be used as general RAM)

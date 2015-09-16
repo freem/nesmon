@@ -45,6 +45,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 
 .enum $0700
 	; [nesmon system vars]
+	cartPRGRAM          .dsb 1		; cart PRG RAM status
 	activeKBType        .dsb 1		; current keyboard type (0=software, 1=hardware)
 
 	; [editor related]
