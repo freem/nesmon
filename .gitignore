@@ -1,0 +1,5 @@
+# no binaries, no fceux nl files
+*.nes
+*.nl
+
+# everything else is fair game for now
