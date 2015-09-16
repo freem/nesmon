@@ -47,6 +47,7 @@ Reset:
 	bne @hideSpr
 
 	; check for WRAM at $6000-$7FFF
+	; xxx: only checks $6000; MMC6's RAM starts at $7000
 	lda $6000
 	sta tmp00			; save original value
 	lda #$AA
@@ -64,14 +65,14 @@ Reset:
 	lda #0
 	sta $6000
 	sta tmp00
-	jmp @afterWRAM
+	jmp @afterWRAM6000
 
 @noWRAM6000:
 	lda cartPRGRAM
 	and #%11111101
 	sta cartPRGRAM
 
-@afterWRAM:
+@afterWRAM6000:
 	; (todo: other non-PPU related setup)
 
 	; todo part 2: mapper-specific setup code
@@ -140,12 +141,27 @@ Reset:
 	stx PPU_ADDR
 	sty PPU_ADDR
 
+	; BG1
 	lda #$0F			; black
 	ldx #$30			; white
+	sta PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
+
+	; BG2
+	ldx #$16
+	sta PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
+
+	; xxx: BG3,4 and sprites are temporary
+	ldx #$30
 
 	; I would rather keep Y as 0...
 	; (POSSIBLE SPACE OPTIMIZATION POINT)
-.rept 8
+.rept 6
 	sta PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
