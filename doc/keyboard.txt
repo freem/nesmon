@@ -1,5 +1,5 @@
-Keyboard Information
-====================
+Hardware Keyboard Information
+=============================
 As nesmon is an assembly language monitor, having a keyboard is the best option
 for input. However, unlike the PC world, the NES/Famicom have a few competing
 keyboard styles.

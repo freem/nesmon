@@ -68,8 +68,11 @@ OAM_BUF = $0200 ; unless otherwise specified...
 
 	; [software keyboard]
 	softkbPos           .dsw 1		; nametable position for software keyboard
-	softkbX             .dsb 1		; current software keyboard cursor X pos
-	softkbY             .dsb 1		; current software keyboard cursor Y pos
+	softkbX             .dsb 1		; software keyboard cursor X pos (0-12)
+	softkbY             .dsb 1		; software keyboard cursor Y pos (0-4)
+	softkbShift         .dsb 1		; is the software keyboard shifted?
+	softkbCtrl          .dsb 1		; software keyboard ctrl key status
+	softkbAlt           .dsb 1		; software keyboard alt key status
 
 	; [nesmon vram buffer]
 	; 64 bytes?
