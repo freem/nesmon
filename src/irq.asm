@@ -18,6 +18,14 @@ IRQ:
 	tsx
 	stx int_regSP		; stack pointer location before the IRQ
 
+	; FME-7 needs to acknowledge IRQ
+.ifdef FME7
+	ldx #$0D
+	lda #0
+	stx $8000
+	sta $A000
+.endif
+
 	; we need to see if we came here via BRK not.
 	lda int_regStatus
 	and #%00010000
@@ -34,6 +42,8 @@ IRQ:
 	; load monitor
 	lda #1
 	sta inMonitor
+
+	; show registers
 
 @monitorLoaded:
 	; cool beans, go to the monitor
