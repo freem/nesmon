@@ -1,0 +1,39 @@
+nesmon Source Tree
+==================
+
+charsets_1bpp/         1BPP character sets
+	charset.asm
+	charset0.chr       Default character set
+	charset1.chr       Nintendo-style character set
+	charset2.chr       Compile-style character set
+	charset3.chr       Capcom-style character set
+	charset4.chr       Batman: Return of the Joker-style (title screen) character set
+	charset5.chr       Commodore 64 charset
+	hexparts.chr       Small hex digits for each side of an 8x8 tile
+
+header/                NES 2.0 headers
+	fme7.asm           FME-7 (Mapper 069)
+	mpr100.asm         Nintendulator Debug Mapper (Mapper 100)
+	nrom.asm           NROM (Mapper 000)
+
+input/                 Keyboard input code
+	(no files yet)
+
+mapper/                Mapper-specific code
+	(no files yet)
+
+modules/
+	editor.asm         Screen editor routines
+	microasm.asm       Micro 6502 Assembler
+	tapemod.asm        Cassette tape routines
+
+irq.asm                IRQ/BRK handler (pretty important in a monitor program)
+Makefile               GNU makefile for creating the project
+nes.inc                hardware defines
+nesmon.asm             Main file (lays out the program binary)
+nmi.asm                NMI code
+opcodes.inc            6502 opcodes
+ram.inc                RAM defines
+reset.asm              Reset code
+routines_io.asm        NES hardware I/O routines
+routines_ppu.asm       Routines that use the PPU hardware

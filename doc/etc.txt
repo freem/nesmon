@@ -1,0 +1,19 @@
+Unorganized Notes
+=================
+NES-CNROM to RAM cart:
+http://forums.nesdev.com/viewtopic.php?t=894
+
+blargg's NES boot loader
+http://slack.net/~ant/old/nes-code/bootloader/
+
+nesdev threads of interest
+http://forums.nesdev.com/viewtopic.php?f=2&t=11518
+http://forums.nesdev.com/viewtopic.php?f=9&t=10944
+http://forums.nesdev.com/viewtopic.php?f=9&t=10905
+http://forums.nesdev.com/viewtopic.php?f=9&t=10685
+http://forums.nesdev.com/viewtopic.php?f=9&t=7135
+http://forums.nesdev.com/viewtopic.php?f=9&t=7140
+http://forums.nesdev.com/viewtopic.php?f=9&t=6969
+http://forums.nesdev.com/viewtopic.php?f=2&t=7015
+http://forums.nesdev.com/viewtopic.php?f=2&t=6941
+http://forums.nesdev.com/viewtopic.php?f=9&t=6716

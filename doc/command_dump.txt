@@ -1,0 +1,30 @@
+unofficial command dump
+=======================
+this is the work in progress command listing
+
+sources:
+http://www.c64-wiki.com/index.php/Final_Cartridge_3
+http://vice-emu.sourceforge.net/vice_11.html#SEC243
+https://www.c64-wiki.de/index.php/TEDMON (german)
+http://www.commodore.ca/manuals/128_system_guide/app-j.htm
+http://www.6502.org/users/andre/osa/mon.html
+http://www.commodore.ca/manuals/pdfs/PET_Machine_Language_Monitor.pdf
+
+quick command list
+* A                    assemble a single line of code
+* C                    comparison
+* CLS                  clear the screen
+* D                    disassemble
+* JMP                  jmp
+* R                    show regs
+* RESET                reset system
+* X                    quit monitor
+
+
+* run                  
+
+unsure command list
+* BTL                  run serial bootloader
+* TPL                  load from tape (Family BASIC Keyboard only)
+* TPS                  save to tape (Family BASIC Keyboard only)
+* clearall             clear all RAM

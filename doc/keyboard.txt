@@ -1,0 +1,27 @@
+Keyboard Information
+====================
+As nesmon is an assembly language monitor, having a keyboard is the best option
+for input. However, unlike the PC world, the NES/Famicom have a few competing
+keyboard styles.
+
+Family BASIC Keyboard
+=====================
+The official keyboard.
+Only available in Japan and only easily usable on a Famicom.
+Less keys than a regular keyboard, but allows for entering Japanese Kana.
+
+More information in keyboard_familybasic.txt
+
+Subor Keyboard
+==============
+Unofficial keyboard found with cloned systems.
+
+More information in keyboard_subor.txt
+
+Other Keyboards
+===============
+FCEUX's source code makes reference to a "pec586kb".
+I would document this, but the same source has this comment:
+"TODO: check all keys, some of the are wrong".
+
+Would rather not spread wrong information further.

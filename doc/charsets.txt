@@ -1,0 +1,30 @@
+nesmon Character Sets
+=====================
+nesmon allows you to change the character set at compile time. These sets are
+provided mainly for fluff. The character sets are 1bpp.
+
+"640 bytes should be enough for anyone" -nobody in particular
+
+CHARSET0/charset0.chr
+---------------------
+Default character set (freem's hybrid)
+
+CHARSET1/charset1.chr
+---------------------
+Nintendo-style character set (Super Mario Bros., Balloon Fight)
+
+CHARSET2/charset2.chr
+---------------------
+Compile-style character set (The Guardian Legend/Guardic Gaiden)
+
+CHARSET3/charset3.chr
+---------------------
+Capcom-style character set (Mega Man 3/Rockman 3, Darkwing Duck)
+
+CHARSET4/charset4.chr
+---------------------
+Batman: Return of the Joker-style (title screen) character set
+
+CHARSET5/charset5.chr
+---------------------
+Commodore 64 charset (ripped from VICE's chargen file; thanks)

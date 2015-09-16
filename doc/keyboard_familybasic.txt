@@ -1,0 +1,78 @@
+Keyboard Information: Family BASIC
+==================================
+(Please view this file with UTF-8 encoding for proper display.)
+
+The only "official" keyboard was released in Japan, used with Family BASIC.
+A modified version (for English speaking countries) was produced, but never
+released. The only known hardware is (was?) on display at the Nintendo World
+Store in New York City.
+
+An image of the English keyboard is available:
+https://upload.wikimedia.org/wikipedia/commons/e/e9/Nintendo_AVS_display_case_%28medium_angle%29.jpg
+
+All diagrams in this document are for the Japanese version of the keyboard.
+
+Key Legend
+==========
+ESC    Escape
+CTR    Control
+STOP   Stop
+KANA   Kana
+GRPH   Graphics
+CLR    Clear (backspace)
+INS    Insert
+DEL    Delete
+
+LShft, RShft are Left and Right Shift respectively.
+
+Matrix
+======
+( source: http://wiki.nesdev.com/w/index.php/Family_BASIC_Keyboard#Matrix )
+
+Notes:
+* Return is labeled as "Enter" in this matrix.
+* $4017 means "$4017 bit number"
+
+------+ +-----+ Column  0 +-----+ +-----+ Column  1 +-----+
+$4017 | |  4  |  3  |  2  |  1  | |  4  |  3  |  2  |  1  |
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
+Row 0 | |  ]  |  [  |Enter|  F8 | | STOP|¥ (\)|RShft| KANA|
+Row 1 | |  ;  |  :  |  @  |  F7 | |  ^  |  -  |  /  |  _  |
+Row 2 | |  K  |  L  |  O  |  F6 | |  0  |  P  |  ,  |  .  |
+Row 3 | |  J  |  U  |  I  |  F5 | |  8  |  9  |  N  |  M  |
+Row 4 | |  H  |  G  |  Y  |  F4 | |  6  |  7  |  V  |  B  |
+Row 5 | |  D  |  R  |  T  |  F3 | |  4  |  5  |  C  |  F  |
+Row 6 | |  A  |  S  |  W  |  F2 | |  3  |  E  |  Z  |  X  |
+Row 7 | | CTR |  Q  | ESC |  F1 | |  2  |  1  | GRPH|LShft|
+Row 8 | | Left|Right|  Up | CLR | | INS | DEL |Space| Down|
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
+
+Unshifted Key Layout
+====================
+
+ F1  F2  F3  F4  F5  F6  F7  F8 
+ 1 2 3 4 5 6 7 8 9 0 - ^ \ STOP
+ESC Q W E R T Y U I O P @ [ RETURN CLR INS DEL
+ CTR A S D F G H J K L ; : ] KANA    Up
+SHIFT Z X C V B N M , . / _ SHIFT  Lf  Rt
+      GRPH spacebar                  Dn
+
+(todo: shifted, graphics, kana layouts)
+
+AVS Unshifted Key Layout
+========================
+ F1  F2  F3  F4  F5  F6  F7  F8 
+ 1 2 3 4 5 6 7 8 9 0 = - ^ STOP
+ESC Q W E R T Y U I O P ß * RETURN CLR INS DEL
+ CTR A S D F G H J K L ; : ¥ CAPS    Up
+SHIFT Z X C V B N M , . / £ SHIFT  Lf  Rt
+      GRPH spacebar                  Dn
+
+AVS Shifted Key Layout
+======================
+ F1  F2  F3  F4  F5  F6  F7  F8 
+ ! " # $ % & ' @ ( ) + _ ~ STOP
+ESC Q W E R T Y U I O P ß ¨ RETURN CLR INS DEL
+ CTR A S D F G H J K L [ ] ¥ CAPS    Up
+SHIFT Z X C V B N M < > ? £ SHIFT  Lf  Rt
+      GRPH spacebar                  Dn

@@ -1,0 +1,48 @@
+temp dump
+
+
+[The Final Cartridge III]
+.A     Assemble
+.C     Compare
+.D     Disassemble
+.EC    Output data as character
+.ES    Output data as sprite
+.F     Fill the memory
+.G     Start a binary program
+.H     Hex dump
+.I     Input of text
+.L     Loading a binary program
+.M     Memory dump
+.O     Switch between RAM and ROM
+.OD    Start the disc monitor
+.P     Activate the printer output
+.R     Register view
+.S     Save a memory area
+.T     Transport a memory area within the RAM
+.X     Terminate monitor
+.#     Decimal to Hexadecimal
+.$     Hexadecimal to Decimal
+.@     Send disc command (like DOS")
+.*R    Disk monitor command: Read a sector
+.*W    Disk monitor command: Write a sector
+
+[TEDMON]
+A      assemble        A <addr> <opcode> <operand(s)>
+C      compare         C <src start> <src end> <compare start>
+D      disassemble     D [<start>] [<end>]
+F      fill            F <start> <end> <byte>
+G      go              G <addr>
+H      hunt            H <start> <end> <data>
+J      jump            J [<addr>]
+L      load            L <"filename"> [<device>] [<load addr>]
+M      memory          M [<start>] [<end>]
+R      registers       R
+S      save            S <"filename"> <device> <start> <end>
+T      transfer        T <start> <end> <dest>
+V      verify          V <"filename"> [<device>] [<start addr>]
+X      exit            X
+>      poke            ><addr> <value>
+.      assemble        .<addr> <opcode> <operand(s)>
+;      regdump         ;<PC> <SR> <AC> <XR> <YR> <SP>
+@      diskstuff       @ [<unit>] [<diskcmd>]
+

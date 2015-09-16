@@ -1,0 +1,71 @@
+Keyboard Information: Subor
+===========================
+Subor keyboards have a standard 101-key layout. They are typically found in
+keyboard famiclones (meaning the system is housed inside of the keyboard).
+
+Some keyboards with 104-key layouts also exist.
+
+Key Legend
+==========
+ESC         Escape
+CTRL        Control
+INS         Insert
+Num         Numpad key
+NumEn       Numpad Enter
+NumLk       Num Lock
+null        No key; returns 0?
+
+Matrix
+======
+sources:
+  http://problemkaputt.de/everynes.htm#controllerstypewriterkeyboards
+  FCEUX source (see below)
+
+Notes:
+* Return is labeled as "Enter" in this matrix.
+* $4017 means "$4017 bit number"
+* "nocash bit" refers to the numbering used in the nocash documentation
+* "Bai Bai Dino" uses a different layout on row 9, currently unknown.
+
+nocash bit 3     2     1     0       7     6     5     4
+------+ +-----+ Column  0 +-----+ +-----+ Column  1 +-----+
+$4017 | |  4  |  3  |  2  |  1  | |  4  |  3  |  2  |  1  |
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
+Row 0 | |  C  |  F  |  G  |  4  | |  V  |  5  |  E  |  F2 |
+Row 1 | | END |  S  |  D  |  2  | |  X  |  3  |  W  |  F1 |
+Row 2 | |Right|Pg Dn|Bkspc| INS | | HOME| ESC |Pg Up|  F8 |
+Row 3 | |  ,  |  L  |  I  |  9  | |  .  |  0  |  O  |  F5 |
+Row 4 | | Left|  Up |Enter|  ]  | | Down|  \  |  [  |  F7 |
+Row 5 | | Pa  |  Z  | Caps|  Q  | | CTRL|  1  |  A  | ESC |
+Row 6 | |  M  |  K  |  Y  |  7  | |  J  |  8  |  U  |  F4 |
+Row 7 | |  /  |  '  |  ;  |  -  | |Shift|  =  |  P  |  F6 |
+Row 8 | |Space|  N  |  H  |  T  | |  B  |  6  |  R  |  F3 |
+-----------------------------------------------------------
+FCEUX supports these next few rows:
+-----------------------------------------------------------
+Row 9 | |Num 8|Num 4|NumEn|Num 6| | null| null| null|Num 2|
+Row 10| | F11 |Num 7|Num 4|LMenu| |Num 8|Num 2|Num 1| F12 |
+Row 11| |Num 9|Num *|Num +|Num -| |NumLk|Num /|Num 5| F10 |
+Row 12| |Space|Pause|Num 6|Grave| |Num 0|Num .|Num 3|  F9 |
+------+ +-----+-----+-----+-----+ +-----+-----+-----+-----+
+
+Matrix definition from FCEUX
+----------------------------
+(src/input/suborkb.cpp)
+
+static uint16 matrix[13][2][4] =
+{
+	{ { AK(4), AK(G), AK(F), AK(C) }, { AK(F2), AK(E), AK(5), AK(V) } },
+	{ { AK(2), AK(D), AK(S), AK(END) }, { AK(F1), AK(W), AK(3), AK(X) } },
+	{ { AK(INSERT), AK(BACK), AK(NEXT), AK(RIGHT) }, { AK(F8), AK(PRIOR), AK(DELETE), AK(HOME) } },
+	{ { AK(9), AK(I), AK(L), AK(COMMA) }, { AK(F5), AK(O), AK(0), AK(PERIOD) } },
+	{ { AK(RBRACKET), AK(RETURN), AK(UP), AK(LEFT) }, { AK(F7), AK(LBRACKET), AK(BACKSLASH), AK(DOWN) } },
+	{ { AK(Q), AK(CAPITAL), AK(Z), AK(TAB) }, { AK(ESCAPE), AK(A), AK(1), AK(LCONTROL) } },
+	{ { AK(7), AK(Y), AK(K), AK(M) }, { AK(F4), AK(U), AK(8), AK(J) } },
+	{ { AK(MINUS), AK(SEMICOLON), AK(APOSTROPHE), AK(SLASH) }, { AK(F6), AK(P), AK(EQUALS), AK(LSHIFT) } },
+	{ { AK(T), AK(H), AK(N), AK(SPACE) }, { AK(F3), AK(R), AK(6), AK(B) } },
+	{ { AK(NUMPAD6), AK(GRETURN), AK(NUMPAD4), AK(NUMPAD8) }, { AK(NUMPAD2), 0, 0, 0 } },   // baibaidino actually uses diferent layot
+	{ { AK(LMENU), AK(NUMPAD4), AK(NUMPAD7), AK(F11) }, { AK(F12), AK(NUMPAD1), AK(NUMPAD2), AK(NUMPAD8) } },
+	{ { AK(SUBTRACT), AK(ADD), AK(MULTIPLY), AK(NUMPAD9) }, { AK(F10), AK(NUMPAD5), AK(DIVIDE), AK(NUMLOCK) } },
+	{ { AK(GRAVE), AK(NUMPAD6), AK(PAUSE), AK(SPACE) },	 { AK(F9), AK(NUMPAD3), AK(DECIMAL), AK(NUMPAD0) } },
+};
