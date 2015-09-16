@@ -12,6 +12,7 @@ This is a work in progress and is not "production ready".
   2.4    Future Versions?
  3.      Usage
  4.      Commands
+ ?.      Compiling from Source
 
 ================================================================================
 1. Introduction
@@ -109,6 +110,13 @@ Candidates, in no particular order:
 ================================================================================
 3. Usage
 ================================================================================
+nesmon is best used with a hardware keyboard. However, the official keyboard was
+only released in Japan and will only easily work on Famicoms without hardware
+modification.
+
+Holding the A and B buttons on controller 1 for 3 seconds will display the
+software keyboard (if it isn't already shown).
+
 Holding Select on controller 1 for 3 seconds will toggle the monitor.
 Holding Start+Select on controller 1 for 3 seconds will reboot the monitor.
 

@@ -25,3 +25,34 @@ I would document this, but the same source has this comment:
 "TODO: check all keys, some of the are wrong".
 
 Would rather not spread wrong information further.
+
+Comparing Family BASIC Keyboard and Subor Keyboard
+==================================================
+The matrix for each keyboard is highly incompatible, but two similarities exist,
+both on Row 3.
+
+Exact Matches
+-------------
+I (Column 0, Row 3)
+
+Similar
+-------
+F5
+    Family BASIC: Column 0, Row 3
+  Subor Keyboard: Column 1, Row 3
+
+Keyboard Driver Identification
+==============================
+Each nesmon keyboard driver requires a signature. This signature consists of a
+six character string, followed by a single byte (representing the driver version
+number).
+
+Subor has a byte at the end of its string; this will be changed if alternate
+versions of the Subor keyboard are found/supported.
+
+Keyboard Driver Jump Table
+==========================
+Each keyboard driver must define a jump table
+
+* "GetKeys": Read Input (raw)
+*
