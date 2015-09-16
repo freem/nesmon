@@ -5,9 +5,17 @@
 ; The CHR Data Viewer/Editor (also known as "chrview") allows you to view and
 ; edit the CHR data. Please note: editing will require CHR-RAM.
 ;==============================================================================;
+; Routine naming: chrview_*
+;==============================================================================;
+
+;==============================================================================;
 ; [Strings]
 
 ; todo: nametable addresses are obviously wrong
+vbstr_chrview_PixColor:
+	.db $20,$00,6
+	.db "PIXEL COLOR"
+
 vbstr_chrview_Colors:
 	.db $20,$00,6
 	.db "COLORS"
@@ -58,7 +66,10 @@ vbstr_chrview_Exit:
 ;==============================================================================;
 chrview_Init:
 	; blah
+
 	; clear nametables
+	
+
 	; set up screen display
 	; clear module ram
 
