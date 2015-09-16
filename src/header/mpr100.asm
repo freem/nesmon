@@ -61,7 +61,7 @@
 	;      |_______ Battery backed PRG RAM/Serial EEPROM
 
 	;Byte 11/Video RAM size
-	.db %00000000
+	.db %00000111
 	;    |__||__|
 	;      |   |
 	;      |   |___ Non-battery backed CHR RAM
