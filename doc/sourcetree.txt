@@ -22,7 +22,7 @@ input/                 Input code (Keyboards, etc.)
 	kb_subor.asm       Subor keyboard
 
 mapper/                Mapper-specific code
-	(no files yet)
+	fme7.asm           Sunsoft FME-7 mapper code
 
 modules/               nesmon Modules
 	commands.asm       Command handler
