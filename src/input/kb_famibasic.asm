@@ -8,7 +8,9 @@
 
 ;==============================================================================;
 ; nesmon/src/input/kb_famibasic.asm
-; Family BASIC Keyboard
+; Family BASIC Keyboard (HVC-007) keyboard driver
 ;==============================================================================;
-KeyboardDriverSignature:	.db "HVCKB"
+KBSignature_FamiBasic:	.db "HVC007",$00
+
+; Keyboard Driver Jump Table
 ;==============================================================================;

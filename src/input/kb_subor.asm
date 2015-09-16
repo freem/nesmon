@@ -8,7 +8,9 @@
 
 ;==============================================================================;
 ; nesmon/src/input/kb_subor.asm
-; Subor Keyboard
+; Subor Keyboard driver
 ;==============================================================================;
-KeyboardDriverSignature:	.db "SUBOR"
+KBSignature_Subor:	.db "SUBOR",$00,$00
+
+; Keyboard Driver Jump Table
 ;==============================================================================;
