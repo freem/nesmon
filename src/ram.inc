@@ -19,7 +19,7 @@
 	tmp06               .dsb 1
 	tmp07               .dsb 1
 
-	; $08-$0F: nesmon system-specific
+	; $08-$0F: nesmon system-specific (highest priority)
 	inMonitor           .dsb 1		; ($08) is the monitor active?
 	int_PC              .dsw 1		; ($09,$0A) internal copy of program counter
 	int_regA            .dsb 1		; ($0B) internal copy of A
@@ -44,19 +44,28 @@ OAM_BUF = $0200 ; unless otherwise specified...
 ; This page is reserved for nesmon.
 
 .enum $0700
+	; [nesmon system vars]
+	activeKBType        .dsb 1		; current keyboard type (0=software, 1=hardware)
+
 	; [editor related]
 	; -- editor display logic --
-	curLineNum          .dsb 1		; current input line number
-	curScrollY          .dsb 1		; current Y scroll
+	editLineNum         .dsb 1		; current input line number
+	editScrollY         .dsb 1		; current Y scroll
+	editScrollNT        .dsb 1		; current nametable scroll (0=$2000,1=$2400,2=$2800,3=$2C00)
 	; -- visual cursor --
-	cursorDispX         .dsb 1		; cursor X pos
-	cursorDispY         .dsb 1		; cursor Y pos
-	cursorBlink         .dsb 1		; is cursor blinking
+	edcurDispX          .dsb 1		; cursor X pos
+	edcurDispY          .dsb 1		; cursor Y pos
+	edcurBlink          .dsb 1		; is cursor blinking
 	; -- current input line --
-	cursorX             .dsb 1		; current X pos within current line
+	edcursorX           .dsb 1		; current X pos within current line
 	curLineEnd          .dsb 1		; input line end
 	curNumChars         .dsb 1		; current number of characters in buffer
 	curLineBuf          .dsb 30		; current input line text buffer
+
+	; [software keyboard]
+	softkbPos           .dsw 1		; nametable position for software keyboard
+	softkbX             .dsb 1		; current software keyboard cursor X pos
+	softkbY             .dsb 1		; current software keyboard cursor Y pos
 
 	; [nesmon vram buffer]
 	; 64 bytes?
