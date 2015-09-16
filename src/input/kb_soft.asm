@@ -6,5 +6,8 @@
 ; to the console at all. This can be for various reasons, none of which are
 ; important. When no keyboard is available, the joypads must be used.
 
-; Enter the software keyboard.
+; Enter the software keyboard. Unlike the hardware keyboards, the software
+; keyboard uses an on-screen display for input.
+;==============================================================================;
+KBSignature_Soft:	.db "JOYKB"
 ;==============================================================================;
