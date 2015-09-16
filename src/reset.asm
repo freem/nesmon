@@ -47,7 +47,11 @@ Reset:
 	bne @hideSpr
 
 	; (todo: other non-PPU related setup)
+
 	; todo part 2: mapper-specific setup code
+.ifdef FME7
+	jsr fme7_Setup		; do FME-7 specific setup
+.endif
 
 ; vblank wait 2
 @waitVBL2:
@@ -90,7 +94,6 @@ Reset:
 	ldy #>chr_charset
 	stx tmp00
 	sty tmp01
-
 	; adjust pointer to load second set
 	clc
 	lda tmp00
@@ -99,7 +102,6 @@ Reset:
 	lda tmp01
 	adc #0
 	sta tmp01
-
 	; perform the load
 	ldx #$02
 	ldy #$00
@@ -143,6 +145,7 @@ Reset:
 	lda #%00001110
 	sta PPU_MASK
 
-; xxx: temporary!!!
+; xxx: should really jump into the monitor here
+; temporary hack!!!
 forever:
 	jmp forever
