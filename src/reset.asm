@@ -100,6 +100,7 @@ Reset:
 	adc #0
 	sta tmp01
 
+	; perform the load
 	ldx #$02
 	ldy #$00
 	lda #64

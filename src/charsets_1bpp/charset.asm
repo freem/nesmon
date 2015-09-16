@@ -2,6 +2,7 @@
 ; yes, you.
 ; don't try and be "smart" and include multiple character sets in a single
 ; nesmon binary. That wastes space that could be used for other things.
+; (In other words, only define one CHARSET variable.)
 
 chr_charset:
 .ifdef CHARSET0
@@ -37,7 +38,7 @@ chr_charset:
 	.ifndef CHARSET3
 	.ifndef CHARSET4
 	.ifndef CHARSET5
-		.error "No valid CHARSET defined, or src/charsets_1bpp/charset.asm needs to be changed"
+		.error "No valid CHARSET defined, or src/charsets_1bpp/charset.asm needs to be edited"
 	.endif ;charset5
 	.endif ;charset4
 	.endif ;charset3
