@@ -3,6 +3,10 @@ nesmon Character Sets
 nesmon allows you to change the character set at compile time. These sets are
 provided mainly for fluff. The character sets are 1bpp.
 
+By default, the first 16 tiles get loaded at PPU address $0000 (tile $00), then
+the next 64 tiles are written to $0200 (tile $20). Tiles $10-$1F are reserved
+for the monitor program and/or any modules.
+
 "640 bytes should be enough for anyone" -nobody in particular
 
 CHARSET0/charset0.chr

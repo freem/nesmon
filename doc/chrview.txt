@@ -3,6 +3,8 @@ CHR Data Viewer/Editor ("chrview")
 chrview is a CHR data viewer and editor.
 The editor functions will only work with CHR-RAM.
 
+================================================================================
+
 Interface
 =========
 
@@ -50,4 +52,10 @@ The Main Menu:
 * ???????      (currently undefined option)
 * Option       chrview Options
 * Exit         Exit chrview (back to monitor)
+
+================================================================================
+
+Options
+=======
+(todo)
 
