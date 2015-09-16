@@ -8,11 +8,9 @@
 ;==============================================================================;
 ; The nesmon Micro 6502 Assembler is a primitive single-line 6502 assembler.
 ; It only supports the official/documented opcodes (for now).
-
-; opcodes.inc is assumed to be included elsewhere.
 ;==============================================================================;
 ; Routine naming: micasm_*
-
+;==============================================================================;
 ; Addressing Modes:
 ; Implicit         | IMP  |(e.g. rts)
 ; Accumulator      | A    |(e.g. asl a)

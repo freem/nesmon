@@ -5,7 +5,7 @@
 ; Unlike most freemco programs, the goal of nesmon's RAM usage is to use as
 ; little space as possible.
 
-; todo: account for keyboard input, the input buffer, etc.
+; todo: account for keyboard input, etc.
 ;==============================================================================;
 ; Zero Page
 .enum $0000
@@ -27,6 +27,9 @@
 	int_regY            .dsb 1		; ($0D) internal copy of Y
 	int_regStatus       .dsb 1		; ($0E) internal copy of status
 	int_regSP           .dsb 1		; ($0F) internal copy of stack pointer location
+
+	; I really hope I don't need any more zero page variables for nesmon, but
+	; if I do, they'll start from $10.
 .ende
 
 ;==============================================================================;

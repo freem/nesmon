@@ -22,8 +22,7 @@ and if a write succeeds, the whole region will be marked as RAM.
 
 "reserved for mapper-specific RAM"
 ----------------------------------
-Certain mappers have special types of RAM.
-
+Certain mappers have special types of RAM. Some known examples:
 * MMC5: 1024 bytes of on-chip RAM ($5C00-$5FFF)
 * MMC6: 1024 bytes of on-chip RAM ($7000-$7FFF, mirrored)
 * Namco 163: 128 bytes of wavetable RAM (can be used as general RAM)

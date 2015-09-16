@@ -23,6 +23,7 @@ It is highly unlikely that you will be able to use this in a full project.
 
 For those not familiar with the concept of a machine code monitor, please view
 http://www.c64-wiki.com/index.php/Machine_Code_Monitor
+until I stop being lazy and edit this further.
 
 ================================================================================
 2. Versions
@@ -31,22 +32,23 @@ Multiple versions of the monitor can be assembled. The versions are different
 based on cart configuration.
 
 Included profiles:
-* NROM (Mapper 000)
-* Sunsoft FME-7 (Mapper 069)
 * Nintendulator Debugging Mapper (Mapper 100)
+* Sunsoft FME-7 (Mapper 069)
+* NROM (Mapper 000)
 
 --------------------------------------------------------------------------------
 2.1 Mapper 100 Version
 --------------------------------------------------------------------------------
 The Mapper 100 version is meant for use in Nintendulator.
-This is the recommended version to run, as you are able to simulate a RAM cart.
+This is the recommended version to run, as you are able to simulate a RAM cart
+with the correct settings.
 
 "Mapper 100 (Debug) Bank Selection" dialog values for basic RAM cart operation:
 
 (PRG section)
 PRG $6000-$7FFF: 0, RAM(2)
-PRG $8000-$9FFF: 2, RAM(2)
-PRG $A000-$BFFF: 3, RAM(2)
+PRG $8000-$9FFF: 1, RAM(2)
+PRG $A000-$BFFF: 2, RAM(2)
 PRG $C000-$DFFF: 0, ROM(1)
 PRG $E000-$FFFF: 1, ROM(1)
 
@@ -62,13 +64,13 @@ CHR $1400-$17FF: 5, RAM(2)
 CHR $1800-$1BFF: 6, RAM(2)
 CHR $1C00-$1FFF: 7, RAM(2)
 
-(Horizontal Mirroring)
+(for Horizontal Mirroring)
 CHR $2000-$23FF: 0, Nametable(3)
 CHR $2400-$27FF: 1, Nametable(3)
 CHR $2800-$2BFF: 0, Nametable(3)
 CHR $2C00-$2FFF: 1, Nametable(3)
 
-(Vertical Mirroring)
+(for Vertical Mirroring)
 CHR $2000-$23FF: 0, Nametable(3)
 CHR $2400-$27FF: 0, Nametable(3)
 CHR $2800-$2BFF: 1, Nametable(3)
@@ -82,7 +84,7 @@ banking. However, no known FME-7 game uses CHR-RAM, so it's unknown if this
 combination will work on hardware.
 
 Only the $6000-$7FFF section may be used as RAM (without modifications?), but
-the FME-7 allows for 512K total PRG-RAM (just banked).
+the FME-7 allows for 512K total PRG-RAM (banked).
 
 --------------------------------------------------------------------------------
 2.3 NROM Version
@@ -97,17 +99,18 @@ unorthodox setup, and may not be supported on every emulator.
 There may be other versions in the future. Some are on more realistic boards
 and can be added easily, others will require different branches.
 
-Candidates:
+Candidates, in no particular order:
+* Famicom Disk System (requires Disk System RAM cart)
+* MMC1 (bankswitchable PRG-RAM, up to 32K)
+* MMC5 (can map $6000-$DFFF to WRAM; hard to source the MMC5 ICs)
+* MMC6 (1KB PRG-RAM at $7000-$7FFF)
 * UxROM with PRG-RAM circuit
-* Famicom Disk System
 
 ================================================================================
 3. Usage
 ================================================================================
 Holding Select on controller 1 for 3 seconds will toggle the monitor.
 Holding Start+Select on controller 1 for 3 seconds will reboot the monitor.
-
-
 
 ================================================================================
 4. Commands
