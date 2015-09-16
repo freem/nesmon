@@ -9,6 +9,7 @@ https://www.c64-wiki.de/index.php/TEDMON (german)
 http://www.commodore.ca/manuals/128_system_guide/app-j.htm
 http://www.6502.org/users/andre/osa/mon.html
 http://www.commodore.ca/manuals/pdfs/PET_Machine_Language_Monitor.pdf
+http://www.chrismcovell.com/PCEmon/PCEmon_Commands.html
 
 quick command list
 * A                    assemble a single line of code
