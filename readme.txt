@@ -12,7 +12,7 @@ This is a work in progress and is not "production ready".
   2.4    Future Versions?
  3.      Usage
  4.      Commands
- ?.      Compiling from Source
+ ?.      Assembling from Source
 
 ================================================================================
 1. Introduction
@@ -124,3 +124,47 @@ Holding Start+Select on controller 1 for 3 seconds will reboot the monitor.
 4. Commands
 ================================================================================
 (work in progress)
+
+================================================================================
+?. Assembling from Source
+================================================================================
+To get the most out of nesmon, you'll need to set up a development environment
+for NES work. Since I use the nonstandard .ignorenl/.endinl directives, the
+source requires asm6f [https://github.com/freem/asm6f/] to assemble.
+
+The build process uses a Makefile, but each command can be run without needing
+GNU Make.
+
+With GNU Make, the process is simple:
+1) Start a terminal/command prompt.
+
+2) cd to the nesmon "src" directory.
+
+3) Open "Makefile" in a text editor and edit any customization options.
+
+4) Run one of the following commands:
+ 4.1) "make all" (or just "make")
+ This will build all of the targets mentioned below (aside from clear)
+
+ 4.2) "make nrom"
+ This will create an NROM configuration of nesmon.
+
+ 4.3) "make m100"
+ This will create a Nintendulator Debugging Mapper (mapper 100) nesmon.
+
+ 4.4) "make fme7"
+ This will create a FME-7 configuration of nesmon.
+ 
+ 4.5) "make clean"
+ This will delete the binaries and .nl files. Don't run this one the first time :p
+
+5) Find a way to run the tool.
+
+For emulators, you just run the NES image.
+If you're using the Nintendulator Debugging Mapper (mapper 100), remember to
+open the "Game" menu, set the options above, hit "Apply", then Reset the system.
+
+The hardware side, is, well, harder. Pun aside, you'll need to have some way of
+loading nesmon (preferably a custom cart). I currently do not have any schematics
+or plans for such a cart, though a RAM cart (or flash cart) could work.
+
