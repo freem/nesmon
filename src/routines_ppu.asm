@@ -131,6 +131,9 @@ ppu_load1BPPCHR_c0:
 	rts
 
 ;==============================================================================;
+; ppu_WaitVBL
+; Wait for VBlank via a flag
+
 ppu_WaitVBL:
 	bit PPU_STATUS
 	lda #1
@@ -329,7 +332,16 @@ vramBuf_AddFill:
 ; It is very important that this routine be as simple as possible, in order to
 ; maximize the amount of data we can send.
 
-; xxx: RLE is untested
+; Notes:
+; * Buffer boundaries are only checked at the beginning of nextSection.
+
+; xxx: RLE is untested.
+
+; todo: the new termination logic is bleh.
+; for example:
+; if the buffer location overflows.
+; if the buffer isn't cleared.
+; and so on.
 
 vramBuf_Transfer:
 	; check to see if we should run this
@@ -342,15 +354,14 @@ vramBuf_Transfer:
 	ldy #0
 
 @nextSection:
+	; check if we have reached the physical end of the buffer
+	cpy #64
+	beq @end
+
 	; get ppu addr high
 	lda vramBufData,y
 	sta tmp00
 	iny
-
-	; check if ppu addr < $4000
-	cmp #$40
-	; if so, we are done handling writes for this frame.
-	bcc @end
 
 	; get ppu addr low
 	lda vramBufData,y
@@ -361,6 +372,11 @@ vramBuf_Transfer:
 	lda vramBufData,y
 	sta tmp02
 	iny
+
+	; check if data length is 0
+	; if so, we are done handling writes for this frame.
+	lda tmp02
+	beq @end
 
 	; set new PPU address
 	lda tmp00
