@@ -10,7 +10,14 @@
 ; nesmon/src/input/kb_subor.asm
 ; Subor Keyboard driver
 ;==============================================================================;
-KBSignature_Subor:	.db "SUBOR",$00,$00
+KBSignature_Subor:
+	.db "KB_SUBOR"
+	.db $00 ; subor keyboard variant
+	.db $00 ; driver version number
 
+;==============================================================================;
 ; Keyboard Driver Jump Table
+kbDriver_Subor:
+	.dw $0000
+
 ;==============================================================================;

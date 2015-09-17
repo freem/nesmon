@@ -1,0 +1,55 @@
+Keyboard Information: PEC-586
+=============================
+
+(so many questions)
+
+http://blog.sina.com.cn/s/blog_dda100e10101iugl.html
+
+The keyboard looks like a standard keyboard.
+
+How is the matrix handled?
+How is the joystick read?
+
+The matrix in the FCEUX code is partially right, but not completely correct.
+
+static uint16 matrix[13][8] =
+{
+	{ AK(ESCAPE),AK(SPACE),AK(LMENU),AK(LCONTROL),
+	  AK(LSHIFT),AK(GRAVE),AK(TAB),AK(CAPITAL) },
+
+	{ AK(F6),AK(F7),AK(F5),AK(F4),
+	  AK(F8),AK(F2),AK(F1),AK(F3) },
+
+	{ AK(EQUALS),AK(NUMPAD0),AK(PERIOD),AK(A),
+	  AK(RETURN),AK(1),AK(Q),AK(Z) },
+
+	{ 0,AK(NUMPAD3),AK(NUMPAD6),AK(S)
+	  AK(NUMPAD9),AK(2),AK(W),AK(X) },
+
+	{ AK(SLASH),AK(NUMPAD2),AK(NUMPAD5),AK(D),
+	  AK(NUMPAD8),AK(3),AK(E),AK(C) },
+
+	{ AK(BREAK),AK(NUMPAD1),AK(NUMPAD4),AK(F),
+	  AK(NUMPAD7),AK(4),AK(R),AK(V) },
+
+	{ AK(BACK),AK(BACKSLASH),AK(GRETURN),AK(G),
+	  AK(RBRACKET),AK(5),AK(T),AK(B) },
+
+	{ AK(9),AK(PERIOD),AK(L),AK(K),
+	  AK(O),AK(8),AK(I),AK(COMMA) },
+
+	{ AK(0),AK(SLASH),AK(SEMICOLON),AK(J),
+	  AK(P),AK(7),AK(U),AK(M) },
+
+	{ AK(MINUS),AK(MINUS),AK(APOSTROPHE),AK(H),
+	  AK(LBRACKET),AK(6),AK(Y),AK(N) },
+
+	{ AK(F11),AK(F12),AK(F10),0,
+	  AK(MINUS),AK(F9),0,0 },
+
+	{ AK(UP),AK(RIGHT),AK(DOWN),AK(DIVIDE),
+	  AK(LEFT),AK(MULTIPLY),AK(SUBTRACT),AK(ADD) },
+
+	{ AK(INSERT),AK(NUMPAD1),AK(HOME),AK(PRIOR),
+	  AK(DELETE),AK(END),AK(NEXT),AK(NUMLOCK) },
+};

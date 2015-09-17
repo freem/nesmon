@@ -5,6 +5,9 @@ keyboard famiclones (meaning the system is housed inside of the keyboard).
 
 Some keyboards with 104-key layouts also exist.
 
+The Subor keyboard also works with "Study and Game 32-in-1", which is
+mentioned in the nodash docs.
+
 Key Legend
 ==========
 ESC         Escape
