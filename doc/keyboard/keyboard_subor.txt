@@ -29,6 +29,8 @@ Notes:
 * $4017 means "$4017 bit number"
 * "nocash bit" refers to the numbering used in the nocash documentation
 * "Bai Bai Dino" uses a different layout on row 9, currently unknown.
+* MAME has row 9 unused and the remaining four rows shifted (10,11,12,13).
+  Which is correct?
 
 nocash bit 3     2     1     0       7     6     5     4
 ------+ +-----+ Column  0 +-----+ +-----+ Column  1 +-----+
