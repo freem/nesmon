@@ -213,7 +213,7 @@ vramBuf_Clear:
 ; (Params)
 ; tmp00        PPU address high
 ; tmp01        PPU address low
-; tmp02        Data length
+; tmp02        Data length/flags
 
 ; (Clobbers)
 ; A            Various loads
@@ -231,7 +231,7 @@ vramBuf_NewEntry:
 	lda tmp01
 	sta vramBufData,y
 	iny
-	; write data length
+	; write data length/flags
 	lda tmp02
 	sta vramBufData,y
 
@@ -335,8 +335,6 @@ vramBuf_AddFill:
 ; Notes:
 ; * Buffer boundaries are only checked at the beginning of nextSection.
 
-; xxx: RLE is untested.
-
 ; todo: the new termination logic is bleh.
 ; for example:
 ; if the buffer location overflows.
@@ -411,14 +409,16 @@ vramBuf_Transfer:
 	; get and write byte
 	lda vramBufData,y
 	sta PPU_DATA
-	iny
 	; loop logic
 	dex
 	bne @writeRLE
+
 	; jump back to top
-	beq @nextSection
+	iny
+	bne @nextSection
 
 @end:
+	; finished running this update
 	lda #0
 	sta runNormalVBuf
 	rts
