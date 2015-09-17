@@ -72,7 +72,8 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	; -- visual cursor -- { 3 bytes }
 	edcurDispX          .dsb 1		; cursor X pos
 	edcurDispY          .dsb 1		; cursor Y pos
-	edcurBlink          .dsb 1		; is cursor blinking
+	edcurBlink          .dsb 1		; cursor blinking (0=no/visible,1=invisible)
+	charUnderCursor     .dsb 1		; character under cursor
 	; -- current input line -- { 33 bytes }
 	edcursorX           .dsb 1		; current X pos within current line
 	curLineEnd          .dsb 1		; input line end
