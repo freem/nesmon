@@ -26,7 +26,7 @@ IRQ:
 	sta $A000
 .endif
 
-	; we need to see if we came here via BRK not.
+	; we need to see if we came here via BRK or not.
 	lda int_regStatus
 	and #%00010000
 	bne @doMonitor
@@ -45,8 +45,13 @@ IRQ:
 
 	; show registers
 
+	; cool beans, go to the monitor when we're done here
+	;#<editor_Init
+	;#>editor_Init
+
 @monitorLoaded:
-	; cool beans, go to the monitor
+	; BRK/IRQ when the monitor was already loaded...
+	
 
 IRQ_end:
 	; restore and push status byte

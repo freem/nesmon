@@ -12,9 +12,30 @@
 ;==============================================================================;
 
 ;==============================================================================;
-; editor_ColdBoot
-; Display on booting from power off
+; editor_Init
+; Setup for the editor module
+
+editor_Init:
+	
+
+	; execution falls through
 ;==============================================================================;
-; editor_WarmBoot
-; Display on resetting console
+; editor_MainLoop
+; Editor module main loop
+
+editor_MainLoop:
+	; --before vblank--
+	; react to input
+
+	; --vblank--
+	jsr ppu_WaitVBL
+
+	; --after vblank--
+	; get input for next frame
+
+	jmp editor_MainLoop
+
 ;==============================================================================;
+; editor_PrintLine
+; Prints a line of text to the screen.
+

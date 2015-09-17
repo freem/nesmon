@@ -1,6 +1,7 @@
 unofficial command dump
 =======================
 this is the work in progress command listing
+do not take anything in here as fact.
 
 sources:
 http://www.c64-wiki.com/index.php/Final_Cartridge_3
@@ -11,21 +12,23 @@ http://www.6502.org/users/andre/osa/mon.html
 http://www.commodore.ca/manuals/pdfs/PET_Machine_Language_Monitor.pdf
 http://www.chrismcovell.com/PCEmon/PCEmon_Commands.html
 
-quick command list
-* A                    assemble a single line of code
-* C                    comparison
-* CLS                  clear the screen
-* D                    disassemble
-* JMP                  jmp
-* R                    show regs
-* RESET                reset system
-* X                    quit monitor
+================================================================================
+[quick command list]
 
+A                    assemble a single line of code
+C                    comparison
+CLS                  clear the screen
+D                    disassemble
+J                    jump
+R                    show regs
+RESET                reset system
+X                    quit monitor
 
-* run                  
+run                  
 
-unsure command list
-* BTL                  run serial bootloader
-* TPL                  load from tape (Family BASIC Keyboard only)
-* TPS                  save to tape (Family BASIC Keyboard only)
-* clearall             clear all RAM
+[unsure command list]
+
+BTL                  run serial bootloader
+TPL                  load from tape (Family BASIC Keyboard only?)
+TPS                  save to tape (Family BASIC Keyboard only?)
+clearall             clear all RAM

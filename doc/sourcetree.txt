@@ -25,6 +25,7 @@ mapper/                Mapper-specific code
 	fme7.asm           Sunsoft FME-7 mapper code
 
 modules/               nesmon Modules
+	chrview.asm        CHR Viewer/Editor ("chrview")
 	commands.asm       Command handler
 	editor.asm         Editor routines
 	microasm.asm       Micro 6502 Assembler
