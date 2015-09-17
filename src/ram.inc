@@ -29,9 +29,11 @@
 	int_regSP           .dsb 1		; ($0F) internal copy of stack pointer location
 
 	; $10-$??: nesmon system-specific (high priority)
-	vblanked            .dsb 1		; ($10)
-	runNormalVBuf       .dsb 1		; ($11)
-	vramBufWritePos     .dsb 1		; ($12)
+	vblanked            .dsb 1		; ($10) vblank flag
+	runNormalVBuf       .dsb 1		; ($11) Run a VRAM Buffer update
+	vramBufWritePos     .dsb 1		; ($12) Current write position in VRAM Buffer
+	userNMILoc          .dsw 1		; ($13,$14) pointer to user NMI code
+	;userIRQLoc          .dsw 1		; ($15,$16) pointer to user IRQ code??
 	; I would like to stop this at $1F (at most), but preferably before.
 
 .ende
@@ -52,7 +54,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 
 .enum $0700
 	;--------------------------------------------------------------------------;
-	; [nesmon system vars] { 6 bytes }
+	; [nesmon system vars] { 7 bytes }
 	int_ppuCtrl         .dsb 1		; internal copy of PPU_CTRL
 	int_ppuMask         .dsb 1		; internal copy of PPU_MASK
 	int_scrollX         .dsb 1		; internal copy of PPU_SCROLL write 1
@@ -61,6 +63,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	activeKBType        .dsb 1		; current keyboard type (0=software, 1=hardware)
 	hardKBType          .dsb 1		; (future) variable for hardware keyboard type (0=HVC-007; 1=Subor)
 
+	;--------------------------------------------------------------------------;
 	; [editor related]
 	; -- editor display logic -- { 3 bytes }
 	editLineNum         .dsb 1		; current input line number
@@ -76,6 +79,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	curNumChars         .dsb 1		; current number of characters in buffer
 	curLineBuf          .dsb 30		; current input line text buffer
 
+	;--------------------------------------------------------------------------;
 	; [software keyboard] { 8 bytes }
 	softkbPos           .dsw 1		; nametable position for software keyboard display (starting pos $2242)
 	softkbX             .dsb 1		; software keyboard cursor X pos (0-12)
@@ -85,6 +89,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	softkbAlt           .dsb 1		; software keyboard alt key status
 	softkbFunc          .dsb 1		; software keyboard FN key status
 
+	;--------------------------------------------------------------------------;
 	; [hardware keyboard] { 5 bytes }
 	hardkbJumpTable     .dsw 1		; pointer to current hardware keyboard jump table
 	hardkbShift         .dsb 1		; hardware keyboard shift key status

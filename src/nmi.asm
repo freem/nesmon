@@ -25,6 +25,7 @@ NMI:
 
 @userMode:
 	; user mode NMI
+	jsr (userNMILoc)
 
 NMI_end:
 	; set scroll
@@ -50,6 +51,9 @@ NMI_end:
 	rti
 
 ;==============================================================================;
+; MonitorNMI
+; NMI routines to be run in monitor mode.
+
 MonitorNMI:
 	; transfer vram buffer
 	jsr vramBuf_Transfer
@@ -66,3 +70,10 @@ MonitorNMI:
 	sta PPU_ADDR
 
 	jmp NMI_end
+
+;==============================================================================;
+; DummyUserNMI
+; Dummy user NMI routine, set by default on boot.
+
+DummyUserNMI:
+	rts

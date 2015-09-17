@@ -46,6 +46,12 @@ Reset:
 	inx
 	bne @hideSpr
 
+	; set default user NMI
+	ldx #<DummyUserNMI
+	ldy #>DummyUserNMI
+	stx userNMILoc
+	sty userNMILoc+1
+
 	; check for WRAM at $6000-$7FFF
 	; xxx: only checks $6000; MMC6's RAM starts at $7000
 	lda $6000
@@ -197,7 +203,11 @@ Reset:
 	sta PPU_MASK
 	sta int_ppuMask
 
-; xxx: should really jump into the monitor here
+	; jump into the monitor
+	lda #1
+	sta inMonitor
+	jmp editor_Init
+
 ; temporary hack!!!
 forever:
 	jmp forever
