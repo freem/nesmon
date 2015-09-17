@@ -51,8 +51,8 @@ cartSignature:
 
 cartVersion:
 	; version information
-	.db $00
-	.db $00
+	.db $00 ; major
+	.db $00 ; minor
 
 cartType:
 .ifdef NROM
