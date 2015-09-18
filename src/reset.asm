@@ -26,7 +26,20 @@ Reset:
 	bit PPU_STATUS
 	bpl @waitVBL1
 
-	; init RAM
+	; check reset detection string
+	ldx #0
+@checkResetString:
+	lda resetStringBuf,x
+	cmp resetString,x
+	bne @stringNotFound
+	inx
+	cpx #6
+	bne @checkResetString
+	beq @afterClearRAM
+
+@stringNotFound:
+	; init all RAM
+	lda #0
 	txa
 @clearRAM:
 	sta $00,x
@@ -39,6 +52,16 @@ Reset:
 	inx
 	bne @clearRAM
 
+	; write reset detection string
+	ldx #0
+@writeResetString
+	lda resetString,x
+	sta resetStringBuf,x
+	inx
+	cpx #6
+	bne @writeResetString
+
+@afterClearRAM:
 	; hide sprites
 	lda #$FF
 @hideSpr:
@@ -69,7 +92,7 @@ Reset:
 
 	; WRAM exists at $6000 (and hopefully up to $7FFF)
 	lda cartPRGRAM
-	ora #%00000010
+	ora #%00000001
 	sta cartPRGRAM
 
 	; clear things we've messed with
@@ -80,13 +103,13 @@ Reset:
 
 @noWRAM6000:
 	lda cartPRGRAM
-	and #%11111101
+	and #%11111110
 	sta cartPRGRAM
 
 @afterWRAM6000:
 	; (todo: other non-PPU related setup)
 
-	; todo part 2: mapper-specific setup code
+	; Mapper-specific setup code
 .ifdef FME7
 	jsr fme7_Setup		; do FME-7 specific setup
 .endif
@@ -102,12 +125,13 @@ Reset:
 	ldx #$20
 	jsr ppu_clearNT
 	; the address of the second nametable to clear depends on the mirroring
+	; not handled: 3 screen, 4 screen, mapper controlled mirroring.
+	; You'll have to do that yourself, sorry.
 .if HDR_MIRRORING == 0 ; horizontal mirroring/vertical scrolling
 	ldx #$28
 .else ;vertical mirroring/horizontal scrolling
 	ldx #$24
 .endif
-	; not handled: 3 screen, 4 screen, mapper controlled mirroring.
 	jsr ppu_clearNT
 
 	; clear CHR-RAM
@@ -196,7 +220,9 @@ Reset:
 
 	; reset scroll
 	sty PPU_SCROLL
+	sty int_scrollX
 	sty PPU_SCROLL
+	sty int_scrollY
 
 	; turn on NMI; sprites and BG are on $0000 by default
 	lda #%10000000
@@ -208,11 +234,18 @@ Reset:
 	sta PPU_MASK
 	sta int_ppuMask
 
+	; before jumping into the monitor, set the destination PC to forever
+	; (used if someone runs the exit command right after the monitor opens)
+	ldx #<forever
+	ldy #>forever
+	stx int_PC
+	sty int_PC+1
+
 	; jump into the monitor
 	lda #1
 	sta inMonitor
 	jmp editor_Init
 
-; temporary hack!!!
+; if we got here, something is wrong. you need to reset or power cycle.
 forever:
 	jmp forever

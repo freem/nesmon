@@ -40,20 +40,27 @@
 
 ; I am really hoping my code doesn't expand too much, but it is a bit more
 ; complicated than just a bootloader.
+;==============================================================================;
 
 .org $C000
 
+; Cart identification
 cartSignature:
 	;    ----------------
 	.db "NES MONITOR ROM "
 	.db "YYYYMMDD HH:MM" ; xxx: replace with generated build date and time
 	;    ----------------
 
+; reset detection string
+resetString: .db "nesmon"
+
+; version information
 cartVersion:
-	; version information
 	.db $00 ; major
 	.db $00 ; minor
 
+; mapper/hardware type (defined at assemble time)
+; All entries should be 16 characters, left-aligned with spaces.
 cartType:
 .ifdef NROM
 	;    ----------------
@@ -99,7 +106,9 @@ cartType:
 	.endif
 .endif
 
-; caveat: only use one hardware keyboard at a time
+; caveat: only allows one hardware keyboard at a time
+; switchable keyboard support may exist in the future.
+
 .ifdef KB_FAMIBASIC
 	.include "input/kb_famibasic.asm"
 .else

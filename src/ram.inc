@@ -54,6 +54,10 @@ OAM_BUF = $0200 ; unless otherwise specified...
 
 .enum $0700
 	;--------------------------------------------------------------------------;
+	; [reset detection]
+	resetStringBuf      .dsb 6		; reset detection string
+
+	;--------------------------------------------------------------------------;
 	; [nesmon system vars] { 7 bytes }
 	int_ppuCtrl         .dsb 1		; internal copy of PPU_CTRL
 	int_ppuMask         .dsb 1		; internal copy of PPU_MASK
@@ -69,7 +73,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	editLineNum         .dsb 1		; current input line number
 	editScrollY         .dsb 1		; current Y scroll
 	editScrollNT        .dsb 1		; current nametable scroll (0=$2000,1=$2400,2=$2800,3=$2C00)
-	; -- visual cursor -- { 3 bytes }
+	; -- visual cursor -- { 4 bytes }
 	edcurDispX          .dsb 1		; cursor X pos
 	edcurDispY          .dsb 1		; cursor Y pos
 	edcurBlink          .dsb 1		; cursor blinking (0=no/visible,1=invisible)

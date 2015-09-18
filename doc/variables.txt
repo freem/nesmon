@@ -6,17 +6,18 @@ Detailed writings on nesmon-specific variables.
 cartPRGRAM
 ================================================================================
 Determines how much PRG-RAM is available for use.
-The checks in nesmon are not robust; they check the first byte of the region,
-and if a write succeeds, the whole region will be marked as RAM.
+
+The current checks in nesmon are not robust; they check the first byte of the
+region, and if a write succeeds, the whole region will be marked as RAM.
 
 00000000
 ||||||||
-||||||||__ $5000-$5FFF (rarity)
-|||||||___ $6000-$7FFF
-||||||____ $8000-$9FFF
-|||||_____ $A000-$BFFF
-||||______ $C000-$DFFF
-|||_______ $E000-$FFFF
+||||||||__ $6000-$7FFF
+|||||||___ $8000-$9FFF
+||||||____ $A000-$BFFF
+|||||_____ $C000-$DFFF
+||||______ $E000-$FFFF
+|||_______ (reserved for mapper-specific RAM)
 ||________ (reserved for mapper-specific RAM)
 |_________ (reserved for mapper-specific RAM)
 

@@ -21,6 +21,7 @@ CLS                  clear the screen
 D                    disassemble
 J                    jump
 R                    show regs
+R+                   show regs and prepare next line for editing regs
 RESET                reset system
 X                    quit monitor
 
