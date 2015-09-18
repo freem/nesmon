@@ -16,7 +16,42 @@
 ; Setup for the editor module
 
 editor_Init:
-	
+	; do real initialization
+
+	; init display
+	; prepare header
+	ldx #$20
+	ldy #$21
+	lda #15
+	stx tmp00
+	sty tmp01
+	sta tmp02
+	jsr vramBuf_NewEntry
+
+	ldx #<cartSignature
+	ldy #>cartSignature
+	stx tmp00
+	sty tmp01
+	lda #15
+	jsr vramBuf_AddFromPtr
+
+	ldx #$20
+	ldy #$31
+	lda #14
+	stx tmp00
+	sty tmp01
+	sta tmp02
+	jsr vramBuf_NewEntry
+
+	ldx #<(cartSignature+16)
+	ldy #>(cartSignature+16)
+	stx tmp00
+	sty tmp01
+	lda #14
+	jsr vramBuf_AddFromPtr
+
+	lda #1
+	sta runNormalVBuf
 
 	; execution falls through
 ;==============================================================================;
