@@ -132,6 +132,11 @@ To get the most out of nesmon, you'll need to set up a development environment
 for NES work. Since I use the nonstandard .ignorenl/.endinl directives, the
 source requires asm6f [https://github.com/freem/asm6f/] to assemble.
 
+Lua 5.x is required for running the datetime script.
+I can't reliably guarantee that every system is going to have the GNU datetime
+command (nor Lua, but it's easier to get Lua installed on other OSes), so I'm
+using a simple Lua script for generating the date and time.
+
 The build process uses a Makefile, but each command can be run without needing
 GNU Make.
 
@@ -165,6 +170,6 @@ If you're using the Nintendulator Debugging Mapper (mapper 100), remember to
 open the "Game" menu, set the options above, hit "Apply", then Reset the system.
 
 The hardware side, is, well, harder. Pun aside, you'll need to have some way of
-loading nesmon (preferably a custom cart). I currently do not have any schematics
-or plans for such a cart, though a RAM cart (or flash cart) could work.
+loading nesmon (preferably with a custom RAM cart). I currently do not have any
+schematics or plans for such a cart, though a RAM cart (or flash cart) could work.
 

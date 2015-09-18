@@ -48,11 +48,8 @@
 cartSignature:
 	;    ----------------
 	.db "NES MONITOR ROM "
-	.db "YYYYMMDD HH:MM" ; xxx: replace with generated build date and time
+	.incbin "datetime.bin"
 	;    ----------------
-
-; reset detection string
-resetString: .db "nesmon"
 
 ; version information
 cartVersion:
@@ -74,6 +71,9 @@ cartType:
 	;    ----------------
 	.db "FME-7           "
 .endif
+
+; reset detection string
+resetString: .db "nesmon"
 
 ;------------------------------------------------------------------------------;
 ; pretty important!

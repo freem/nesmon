@@ -38,14 +38,17 @@ all: nrom m100 fme7
 
 # NROM (mapper 000) profile
 nrom:
+	lua datetime.lua
 	$(AS) -n -dNROM -d$(CHARSET_FLAG) -dKB_$(KEYBOARD_MODULE) $(INFILE_MAIN) $(OUTDIR)/$(OUTFILE_NROM)
 
 # Nintendulator Debug Mapper (mapper 100) profile
 m100:
+	lua datetime.lua
 	$(AS) -n -dM100 -d$(CHARSET_FLAG) -dKB_$(KEYBOARD_MODULE) $(INFILE_MAIN) $(OUTDIR)/$(OUTFILE_M100)
 
 # Sunsoft FME-7 (mapper 069) profile
 fme7:
+	lua datetime.lua
 	$(AS) -n -dFME7 -d$(CHARSET_FLAG) -dKB_$(KEYBOARD_MODULE) $(INFILE_MAIN) $(OUTDIR)/$(OUTFILE_FME7)
 
 clean:

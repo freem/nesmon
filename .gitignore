@@ -2,4 +2,7 @@
 *.nes
 *.nl
 
+# no generated files
+src/datetime.bin
+
 # everything else is fair game for now
