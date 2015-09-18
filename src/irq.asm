@@ -18,7 +18,7 @@ IRQ:
 	tsx
 	stx int_regSP		; stack pointer location before the IRQ
 
-	; FME-7 needs to acknowledge IRQ
+; Mapper-specific IRQ code goes here until further notice
 .ifdef FME7
 	ldx #$0D
 	lda #0
@@ -32,6 +32,15 @@ IRQ:
 	bne @doMonitor
 
 	; do user IRQ code
+	jsr (userIRQLoc)
+
+	; restore and push status, address lo, address hi bytes
+	lda int_regStatus
+	pha
+	lda int_PC
+	pha
+	lda int_PC+1
+	pha
 	jmp IRQ_end
 
 @doMonitor:
@@ -43,23 +52,31 @@ IRQ:
 	lda #1
 	sta inMonitor
 
-	; show registers
+	; show registers (run the register display command)
 
-	; cool beans, go to the monitor when we're done here
-	;#<editor_Init
-	;#>editor_Init
+	; cool beans, go to the monitor code when we're done here
+	lda int_regStatus
+	pha
+	lda #<editor_Init
+	pha
+	lda #>editor_Init
+	pha
+	jmp IRQ_end
 
 @monitorLoaded:
 	; BRK/IRQ when the monitor was already loaded...
-	
+	; what to do?
 
 IRQ_end:
-	; restore and push status byte
-	; restore and push return address lo byte
-	; restore and push return address hi byte
-
 	; restore A,X,Y
 	lda int_regA
 	ldx int_regX
 	ldy int_regY
 	rti
+
+;==============================================================================;
+; DummyUserIRQ
+; Dummy user IRQ routine, set by default on boot.
+
+DummyUserIRQ:
+	rts

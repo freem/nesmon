@@ -51,6 +51,11 @@ Reset:
 	ldy #>DummyUserNMI
 	stx userNMILoc
 	sty userNMILoc+1
+	; set default user IRQ
+	ldx #<DummyUserIRQ
+	ldy #>DummyUserIRQ
+	stx userIRQLoc
+	sty userIRQLoc+1
 
 	; check for WRAM at $6000-$7FFF
 	; xxx: only checks $6000; MMC6's RAM starts at $7000

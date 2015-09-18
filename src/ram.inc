@@ -33,7 +33,7 @@
 	runNormalVBuf       .dsb 1		; ($11) Run a VRAM Buffer update
 	vramBufWritePos     .dsb 1		; ($12) Current write position in VRAM Buffer
 	userNMILoc          .dsw 1		; ($13,$14) pointer to user NMI code
-	;userIRQLoc          .dsw 1		; ($15,$16) pointer to user IRQ code??
+	userIRQLoc          .dsw 1		; ($15,$16) pointer to user IRQ code
 	; I would like to stop this at $1F (at most), but preferably before.
 
 .ende
