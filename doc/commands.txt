@@ -1,0 +1,150 @@
+nesmon Command Reference
+========================
+
+================================================================================
+A (Assemble)
+================================================================================
+A simple single-line assembler.
+
+Usage: A (addr) (opcode) (operand(s))
+
+Example usage:
+A 0300 lda #0
+Will assemble the instruction "lda #0" at $0300.
+
+================================================================================
+C (Compare)
+================================================================================
+Compare two blocks of memory.
+
+Usage: C (startaddr) (endaddr) (compare startaddr)
+
+Example usage:
+C 0300 0320 03A0
+Will compare the blocks of memory at $0300-$0320 and $03A0-$03C0.
+
+================================================================================
+CLRAM (Clear User RAM)
+================================================================================
+Usage: CLRAM
+
+Clears all of the user RAM. The user RAM spans the following locations:
+* CPU $0300-$06FF
+* CPU $6000-$7FFF (if available)
+* CPU $8000-$9FFF (if RAM is mapped here)
+* CPU $A000-$BFFF (if RAM is mapped here)
+* any expansion RAM (mapper-specific)
+
+The CHR graphics will also be reset to the defaults.
+
+================================================================================
+CLS (Clear Screen)
+================================================================================
+Usage: CLS
+Clears the screen and resets the cursor to the first line.
+
+================================================================================
+D (Disassemble)
+================================================================================
+Disassembles the specified chunk of memory.
+
+Usage: D [(startaddr)] [(endaddr)]
+
+Example usage:
+D 0300 032F
+Will disassemble the code between $0300 and $032F.
+
+================================================================================
+F (Fill Memory)
+================================================================================
+Fills the specified block of memory with the specified byte.
+
+Usage: F (startaddr) (endaddr) (byte)
+
+Example usage:
+D 0300 03FF 00
+Will clear $0300-$03FF
+
+================================================================================
+G (Goto)
+================================================================================
+Jump to a point in code. Uses jmp.
+
+Usage: G (addr)
+
+Example usage:
+G 0300
+Will start the program located at $0300.
+
+================================================================================
+H (Hunt)
+================================================================================
+Usage: H (startaddr) (endaddr) (data)
+
+================================================================================
+J (Jump)
+================================================================================
+Jumps to a subroutine. Uses jsr.
+
+Usage: J (addr)
+
+Example usage:
+J 0300
+Will jump to the routine at $0300 (and return to the monitor when a rts is reached?)
+
+================================================================================
+M (Memory Dump)
+================================================================================
+Shows a memory dump of the specified location.
+
+Usage: M (startaddr)[(endaddr)]
+
+Example usage:
+M 0300
+Will display the memory at $0300
+
+================================================================================
+R (Show Registers)
+================================================================================
+This command shows the status of the 6502's registers when the monitor was
+entered.
+
+Example usage:
+R
+ PC   A  X  Y SP SR
+0300 08 F2 C6 FA 00
+
+PC = Program Counter
+A  = Accumulator
+X  = X Register
+Y  = Y Register
+SP = Stack Pointer
+SR = Processor Status Register
+
+================================================================================
+RESET
+================================================================================
+Resets the system.
+
+================================================================================
+T (Transfer Memory Block)
+================================================================================
+Performs a data block copy.
+
+Usage: T (startaddr) (endaddr) (destaddr)
+
+================================================================================
+X (Exit)
+================================================================================
+Exits the monitor and returns to the previously running code.
+
+================================================================================
+> (Modify Memory)
+================================================================================
+Usage: > <addr> <values>
+
+================================================================================
+; (Show and Modify Registers)
+================================================================================
+This command is similar to R, but it fills the next input line with the register
+values for easier editing.

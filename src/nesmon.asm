@@ -97,6 +97,23 @@ resetString: .db "nesmon"
 .include "routines_io.asm"
 
 ;------------------------------------------------------------------------------;
+; general nesmon routines
+;------------------------------------------------------------------------------;
+; nesmon_ClearModuleRAM
+; Clears Module RAM. Should be called in every module's init routine, unless
+; that routine is meant to modify Module RAM. :V
+
+nesmon_ClearModuleRAM:
+	lda #0
+	tax
+@clearModuleRam:
+	sta moduleRAM,x
+	inx
+	cpx #64
+	bne @clearModuleRam
+	rts
+
+;------------------------------------------------------------------------------;
 ; keyboard routines
 .include "input/kb_soft.asm" ; always include software keyboard
 

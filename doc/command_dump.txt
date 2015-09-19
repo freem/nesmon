@@ -11,23 +11,82 @@ http://www.commodore.ca/manuals/128_system_guide/app-j.htm
 http://www.6502.org/users/andre/osa/mon.html
 http://www.commodore.ca/manuals/pdfs/PET_Machine_Language_Monitor.pdf
 http://www.chrismcovell.com/PCEmon/PCEmon_Commands.html
+https://github.com/BigEd/a6502/blob/master/extras/cmon.a65
 
 ================================================================================
 [quick command list]
+This list is not final.
 
 A              assemble a single line of code
 C              comparison
+CLRAM          clear all user RAM
 CLS            clear the screen
 D              disassemble
-J              jump
+F              fill
+G              goto (using jmp?)
+H              hunt
+J              jump (using jsr)
+M              memory dump
 R              show regs
-R+             show regs and prepare next line for editing regs
 RESET          reset system
+T              transfer memory block
 X              quit monitor
+>              modify memory
+;              show registers and prepare next line for editing them
 
+--------------------------------------------------------------------------------
 [unsure command list]
+These commands may or may not make it in
 
-BTL            run serial bootloader
-TPL            load from tape (Family BASIC Keyboard only?)
-TPS            save to tape (Family BASIC Keyboard only?)
-CLRAM          clear all RAM
+SBL            run serial bootloader
+TL             load from tape (Family BASIC Keyboard only?)
+TS             save to tape (Family BASIC Keyboard only?)
+
+================================================================================
+[TEDMON command list]
+This is here for reference only
+A assemble
+C compare
+D disassemble
+F fill
+G go
+H hunt
+L load
+M memory
+R registers
+S save
+T transfer
+V verify
+X exit
+> edit memory
+; modify registers
+
+================================================================================
+[APE65 command list]
+This is here for reference only
+
+? show help
+A assemble
+C compare
+D disassemble
+T transfer
+F fill
+H hunt
+G go
+R register dump
+M memory dump
+> modify memory
+; modify reg
+X exit
+L load file
+S save file
+V verify file
+! shell command
++ trace on
+- trace off
+$ hex convert
+# dec convert 
+% bin convert
+@ oct convert 
+B start BASIC
+^S stop BASIC
