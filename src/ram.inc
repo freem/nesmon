@@ -65,7 +65,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	int_scrollY         .dsb 1		; internal copy of PPU_SCROLL write 2
 	cartPRGRAM          .dsb 1		; cart PRG RAM status
 	activeKBType        .dsb 1		; current keyboard type (0=software, 1=hardware)
-	hardKBType          .dsb 1		; (future) variable for hardware keyboard type (0=HVC-007; 1=Subor)
+	hardKBType          .dsb 1		; (future) variable for hardware keyboard type (0=HVC-007; 1=Subor; 2=PEC)
 
 	;--------------------------------------------------------------------------;
 	; [editor related]
@@ -95,11 +95,13 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	softkbFunc          .dsb 1		; software keyboard FN key status
 
 	;--------------------------------------------------------------------------;
-	; [hardware keyboard] { 5 bytes }
+	; [hardware keyboard] { 19 bytes }
 	hardkbJumpTable     .dsw 1		; pointer to current hardware keyboard jump table
 	hardkbShift         .dsb 1		; hardware keyboard shift key status
 	hardkbCtrl          .dsb 1		; hardware keyboard ctrl key status
 	hardkbAltGr         .dsb 1		; hardware keyboard alt/graphics key status
+	kardkbLockStatus    .dsb 1		; e.g. caps lock, num lock, scroll lock
+	hardkbKeyStatus     .dsb 13		; hardware keyboard overall key status (direct reads)
 .ende
 
 .enum $0780
