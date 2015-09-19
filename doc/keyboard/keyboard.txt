@@ -44,6 +44,9 @@ F5
 ================================================================================
 Writing Keyboard Drivers
 ================================================================================
+Most of these notes are only valid for hardware keyboard support. The software
+keyboard is supported by default and has its own set of routines (due to the
+use of a regular joypad).
 
 Keyboard Driver Identification
 ==============================
@@ -68,3 +71,53 @@ it will be skipped.
 |ShowBoard     | Show Keyboard Display (currently only used by SoftKB)
 |HideBoard     | Hide Keyboard Display (currently only used by SoftKB)
 +--------------+---------------------------------------------------------------+
+
+Keyboard Variables
+==================
+* hardkbJumpTable
+A pointer to the currently enabled hardware keyboard's jump table.
+
+* hardkbShift
+Hardware keyboard Shift key status.
+
+xxxx xx00
+|_____|||
+   |   ||__ Left Shift
+   |   |___ Right Shift
+   |_______ unused
+
+* hardkbCtrl
+Hardware keyboard Control key status.
+Not all keyboards will have multiple Ctrl keys.
+
+xxxx xx00
+|_____|||
+   |   ||__ Left Control (Family BASIC KB's only Control key)
+   |   |___ Right Control
+   |_______ unused
+
+* hardkbAltGr
+Hardware keyboard Alt/Graphics key status.
+
+xxxx x000
+|____||||
+  |   |||__ Left Alt
+  |   ||___ Right Alt
+  |   |____ Graphics Key (Family BASIC KB only)
+  |________ unused
+
+* kardkbLockStatus
+Hardware keyboard lock mode status (e.g. caps lock, num lock, scroll lock).
+Keyboards vary wildly here.
+
+xxxx 0000
+|__| ||||
+  |  ||||__ Caps Lock (non-Family BASIC keyboards only)
+  |  |||___ Num Lock (non-Family BASIC keyboards only)
+  |  ||____ Scroll Lock (non-Family BASIC keyboards only)
+  |  |_____ Kana Lock (Family BASIC keyboard only)
+  |________ unused
+
+* hardkbKeyStatus
+Hardware keyboard overall key status (direct reads). This also varies between
+keyboards. Please see the specific keyboard documentation for each keyboard.

@@ -25,17 +25,14 @@
 
 ; The viewable space with the keyboard open is 30x16 tiles
 ; (30x15 if you want padding from the keyboard's top separator)
+
+; As this keyboard is supported by default, there is no need for a jump table.
 ;==============================================================================;
 ; Routine naming: softkb_*
 ;==============================================================================;
 KBSignature_Soft:
 	.db "KB_SOFTKB"
 	.db $00 ; driver version number
-
-;==============================================================================;
-; Keyboard Driver Jump Table
-kbDriver_Soft:
-	.dw $0000
 
 ;==============================================================================;
 softkb_Show:

@@ -63,11 +63,7 @@ Reset:
 
 @afterClearRAM:
 	; hide sprites
-	lda #$FF
-@hideSpr:
-	sta OAM_BUF,x
-	inx
-	bne @hideSpr
+	jsr ppu_HideSprites
 
 	; set default user NMI
 	ldx #<DummyUserNMI
@@ -79,6 +75,20 @@ Reset:
 	ldy #>DummyUserIRQ
 	stx userIRQLoc
 	sty userIRQLoc+1
+
+	; set hardware keyboard jump table addr
+	; xxx: needs edits for when multi-keyboard support is added
+	; (Family BASIC keyboard will be the default)
+.ifdef KB_FAMIBASIC
+	ldx #<kbDriver_HVC007
+	ldy #>kbDriver_HVC007
+.endif
+.ifdef KB_SUBOR
+	ldx #<kbDriver_Subor
+	ldy #>kbDriver_Subor
+.endif
+	stx hardkbJumpTable
+	sty hardkbJumpTable+1
 
 	; check for WRAM at $6000-$7FFF
 	; xxx: only checks $6000; MMC6's RAM starts at $7000
