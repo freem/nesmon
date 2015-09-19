@@ -35,6 +35,8 @@ Reset:
 	inx
 	cpx #6
 	bne @checkResetString
+	lda #1
+	sta bootType
 	beq @afterClearRAM
 
 @stringNotFound:
@@ -135,6 +137,8 @@ Reset:
 	ldx #$20
 	jsr ppu_clearNT
 	; the address of the second nametable to clear depends on the mirroring
+	; set in the header. oops.
+
 	; not handled: 3 screen, 4 screen, mapper controlled mirroring.
 	; You'll have to do that yourself, sorry.
 .if HDR_MIRRORING == 0 ; horizontal mirroring/vertical scrolling

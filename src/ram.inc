@@ -35,7 +35,11 @@
 	userNMILoc          .dsw 1		; ($13,$14) pointer to user NMI code
 	userIRQLoc          .dsw 1		; ($15,$16) pointer to user IRQ code
 	; I would like to stop this at $1F (at most), but preferably before.
+.ende
 
+.enum $0020
+	; $20-$2x: Controller inputs
+	
 .ende
 
 ;==============================================================================;
@@ -54,15 +58,16 @@ OAM_BUF = $0200 ; unless otherwise specified...
 
 .enum $0700
 	;--------------------------------------------------------------------------;
-	; [reset detection]
+	; [reset detection] { 6 bytes }
 	resetStringBuf      .dsb 6		; reset detection string
 
 	;--------------------------------------------------------------------------;
-	; [nesmon system vars] { 7 bytes }
+	; [nesmon system vars] { 8 bytes }
 	int_ppuCtrl         .dsb 1		; internal copy of PPU_CTRL
 	int_ppuMask         .dsb 1		; internal copy of PPU_MASK
 	int_scrollX         .dsb 1		; internal copy of PPU_SCROLL write 1
 	int_scrollY         .dsb 1		; internal copy of PPU_SCROLL write 2
+	bootType            .dsb 1		; cold/warm boot
 	cartPRGRAM          .dsb 1		; cart PRG RAM status
 	activeKBType        .dsb 1		; current keyboard type (0=software, 1=hardware)
 	hardKBType          .dsb 1		; (future) variable for hardware keyboard type (0=HVC-007; 1=Subor; 2=PEC)
@@ -71,11 +76,11 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	; [editor related]
 	; -- editor display logic -- { 3 bytes }
 	editLineNum         .dsb 1		; current input line number
-	editScrollY         .dsb 1		; current Y scroll
-	editScrollNT        .dsb 1		; current nametable scroll (0=$2000,1=$2400,2=$2800,3=$2C00)
+	editScrollY         .dsb 1		; current editor Y scroll
+	editScrollNT        .dsb 1		; current editor nametable scroll (0=$2000,1=$2400,2=$2800,3=$2C00)
 	; -- visual cursor -- { 4 bytes }
-	edcurDispX          .dsb 1		; cursor X pos
-	edcurDispY          .dsb 1		; cursor Y pos
+	edcurDispX          .dsb 1		; cursor X pos (in cells)
+	edcurDispY          .dsb 1		; cursor Y pos (in cells)
 	edcurBlink          .dsb 1		; cursor blinking (0=no/visible,1=invisible)
 	charUnderCursor     .dsb 1		; character under cursor
 	; -- current input line -- { 33 bytes }
