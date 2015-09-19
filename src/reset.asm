@@ -229,8 +229,8 @@ Reset:
 	sta PPU_CTRL
 	sta int_ppuCtrl
 
-	; don't enable sprites by default (yet); show every pixel
-	lda #%00001110
+	; enable sprites and bg; show every pixel
+	lda #%00011110
 	sta PPU_MASK
 	sta int_ppuMask
 
