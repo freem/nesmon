@@ -3,9 +3,9 @@ nesmon Editor
 Despite being just a "simple line editor", the Editor is nesmon's core module.
 
 In order to simplify code, a number of sacrifices are made:
+* Line length is limited to 30 characters (one tile on each side for margin).
 * No buffering of previous text, meaning you can't run previous lines easily.
 * Due to the above, the cursor can only be moved left/right.
-* Line length is limited to 30 characters (one tile on each side for margin).
 
 ================================================================================
 

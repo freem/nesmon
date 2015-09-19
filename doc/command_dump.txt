@@ -15,21 +15,19 @@ http://www.chrismcovell.com/PCEmon/PCEmon_Commands.html
 ================================================================================
 [quick command list]
 
-A                    assemble a single line of code
-C                    comparison
-CLS                  clear the screen
-D                    disassemble
-J                    jump
-R                    show regs
-R+                   show regs and prepare next line for editing regs
-RESET                reset system
-X                    quit monitor
-
-run                  
+A              assemble a single line of code
+C              comparison
+CLS            clear the screen
+D              disassemble
+J              jump
+R              show regs
+R+             show regs and prepare next line for editing regs
+RESET          reset system
+X              quit monitor
 
 [unsure command list]
 
-BTL                  run serial bootloader
-TPL                  load from tape (Family BASIC Keyboard only?)
-TPS                  save to tape (Family BASIC Keyboard only?)
-clearall             clear all RAM
+BTL            run serial bootloader
+TPL            load from tape (Family BASIC Keyboard only?)
+TPS            save to tape (Family BASIC Keyboard only?)
+CLRAM          clear all RAM

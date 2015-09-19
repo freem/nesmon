@@ -1,8 +1,8 @@
 Hardware Keyboard Information
 =============================
-As nesmon is an assembly language monitor, having a keyboard is the best option
-for input. However, unlike the PC world, the NES/Famicom have a few competing
-keyboard styles.
+As nesmon is a machine language monitor, having a keyboard is the best option
+for input. However, unlike the PC world, there are a few competing keyboard
+styles on the NES/Famicom.
 
 Family BASIC Keyboard
 =====================
@@ -48,8 +48,8 @@ Writing Keyboard Drivers
 Keyboard Driver Identification
 ==============================
 Each nesmon keyboard driver requires a signature. This signature consists of a
-nine character string, followed by a single byte (representing the driver
-version number).
+nine character string ("KB_xxxxxx"), followed by a single byte (representing the
+driver version number).
 
 Subor has a $00 byte at the end of its string; this will be changed if
 alternate versions of the Subor keyboard are found/supported.
@@ -60,14 +60,11 @@ Each keyboard driver must define a jump table containing pointers to various
 routines. If a driver does not handle a routine, set the value to $0000 and
 it will be skipped.
 
-* "Reset"
-	Resets keyboard status
-
-* "GetKeys"
-	Read Input (raw)
-
-* "ShowBoard"
-	Show Keyboard Display (only used by SoftKB)
-
-* "HideBoard"
-	Hide Keyboard Display (only used by SoftKB)
++--------------+---------------------------------------------------------------+
+| Routine Name | Description                                                   |
++--------------+---------------------------------------------------------------+
+|Reset         | Resets keyboard status
+|GetKeys       | Read Input (raw)
+|ShowBoard     | Show Keyboard Display (currently only used by SoftKB)
+|HideBoard     | Hide Keyboard Display (currently only used by SoftKB)
++--------------+---------------------------------------------------------------+
