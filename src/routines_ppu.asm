@@ -161,6 +161,38 @@ ppu_HideSprites:
 	rts
 
 ;==============================================================================;
+; ppu_WriteString
+; Writes a string of data to the PPU. (Rendering must be off)
+
+; (Params)
+; tmp00,tmp01  Pointer to data to write
+; A            Length of data to write
+
+; (Clobbers)
+; A            Used for loading/writing data
+; X            Nametable address, length counter
+; Y            Nametable address
+
+ppu_WriteString:
+	; set PPU address
+	ldx tmp00
+	ldy tmp01
+	stx PPU_ADDR
+	sty PPU_ADDR
+
+	tax
+	ldy #0
+	; write string
+@writeLoop:
+	lda (tmp00),y
+	sta PPU_DATA
+	iny
+	dex
+	bne @writeLoop
+
+	rts
+
+;==============================================================================;
 
 
 ;==============================================================================;
