@@ -124,3 +124,15 @@ cmdHandler_R
 	; print registers
 	; (PC,A,X,Y,SP,SR)
 	rts
+
+;==============================================================================;
+; CHRVIEW
+cmdHandler_CHRVIEW:
+; if not enabled
+.ifdef WITHOUT_CHRVIEW
+	; str_cmdHandler_InvModule
+	rts
+.else
+	; run CHRVIEW
+	jsr chrview_Init	; has to provide rts
+.endif
