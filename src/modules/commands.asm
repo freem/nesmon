@@ -10,6 +10,11 @@
 ; Routine naming: cmdHandler_*
 ;==============================================================================;
 ; [Strings]
+str_cmdHandler_RegLbl:		.db " PC   A  X  Y SP SR"
+str_cmdHandler_OK:			.db "OK"
+str_cmdHandler_BadCmd:		.db "BAD COMMAND"
+str_cmdHandler_NoTape:		.db "NO TAPE ROUTINES"
+str_cmdHandler_InvModule:	.db "NO SUCH MODULE"
 
 ;==============================================================================;
 ; [Command Tables]
