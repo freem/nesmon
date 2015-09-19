@@ -119,8 +119,10 @@ resetString: .db "nesmon"
 
 ;------------------------------------------------------------------------------;
 ; [nesmon default modules]
+; --editor--
 .include "modules/editor.asm"    ; editor program (main interface)
 .include "modules/commands.asm"  ; command parser and handler
+; --assembler--
 .include "modules/microasm.asm"  ; micro 6502 assembler
 
 ;------------------------------------------------------------------------------;

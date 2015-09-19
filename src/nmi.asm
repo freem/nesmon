@@ -16,6 +16,9 @@ NMI:
 	lda #>OAM_BUF
 	sta OAM_DMA
 
+	; todo: check inputs for Start+Select (hold), Select (hold)
+
+@afterInputCheck:
 	; check what mode we are in (user vs. monitor)
 	lda inMonitor
 	beq @userMode

@@ -1,6 +1,6 @@
 ;==============================================================================;
 ; nesmon/src/modules/commands.asm
-; nesmon Command handler
+; Command handler
 ;==============================================================================;
 ; This is the file that processes the commands you type in.
 ; Some commands are handled in their own files (e.g. assembly and disassembly).
@@ -9,6 +9,18 @@
 ;==============================================================================;
 ; Routine naming: cmdHandler_*
 ;==============================================================================;
+; [Strings]
 
 ;==============================================================================;
-; todo: parser, specific commands
+; [Command Tables]
+
+;==============================================================================;
+; cmdHandler_Parse
+; Main parsing routine
+
+cmdHandler_Parse:
+	; search for command at beginning of curLineBuf
+
+	rts
+;==============================================================================;
+
