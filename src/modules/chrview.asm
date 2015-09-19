@@ -10,10 +10,21 @@
 ; [Module RAM definitions]
 ; you'd think these would be GOOD to have in the NL, but conflicting addresses
 ; make this a bummer.
+
+	; remember, 64 bytes maximum.
 .ignorenl
-	CHRVIEW_CURSORPOS = moduleRAM		; (1 byte)
-	CHRVIEW_TILEBUF_EDIT = moduleRAM+$10	; (16 bytes)
-	CHRVIEW_TILEBUF_UNDO = moduleRAM+$20	; (16 bytes)
+	CHRVIEW_CURSORPOS     = moduleRAM		; current cursor position
+	CHRVIEW_SECTION       = moduleRAM+$01	; current active section/command (0=main menu,1=select tile,2=select color,3=edit tile,4=COLORS,5=SWAPCOL,6=options,7=CHRBANK)
+	CHRVIEW_TILE_ADDR_H   = moduleRAM+$02	; ppu address of current tile (low byte)
+	CHRVIEW_TILE_ADDR_L   = moduleRAM+$03	; ppu address of current tile (high byte)
+	; add new stuff here (up to $0F)
+	;--everything below this line is fixed--;
+	CHRVIEW_TILEBUF_EDIT  = moduleRAM+$10	; (16 bytes)
+	;---------------------------------------;
+	CHRVIEW_TILEBUF_UNDO  = moduleRAM+$20	; (16 bytes)
+	;---------------------------------------;
+	CHRVIEW_CLIPBOARD_BUF = moduleRAM+$30	; (16 bytes)
+	;--no more free space after this line!--;
 .endinl
 
 ;==============================================================================;
@@ -81,47 +92,89 @@ vbstr_chrview_Exit:
 
 ;==============================================================================;
 chrview_Init:
-	; variable initialization
-	lda #0
-	sta CHRVIEW_CURSORPOS
-
-	; you need to turn off de light
-
-	; clear nametables
-	
-
-	; set up screen display
-	jsr chrView_InitDisplay
+	; --system variable initialization--
+	; set user NMI
+	; chrview_VBlank
+	; userNMILoc
 
 	; clear module ram
 	jsr nesmon_ClearModuleRAM
 
+	; --module variable initialization--
+	lda #0
+	sta CHRVIEW_CURSORPOS
+
+	; you need to turn off de light
+	lda int_ppuMask
+	and #%11100111
+	sta PPU_MASK
+
+	; clear primary nametable
+	ldx #$20
+	jsr ppu_clearNT
+
+	; set up screen display
+	jsr chrView_InitDisplay
+
 	; ok turn it back on again
+	lda int_ppuMask
+	sta PPU_MASK
 
 ;------------------------------------------------------------------------------;
 chrview_MainLoop:
 	; --before vblank--
 
 	; --vblank--
-	jsr ppu_WaitVBlank
+	jsr ppu_WaitVBL
 
 	; --after vblank--
 	jsr chrview_Input
 
+@mainLoop_end:
 	jmp chrview_MainLoop
+
+;------------------------------------------------------------------------------;
+; doubles as the Exit command
+chrview_Finish:
+	; do screen ending
+	rts					; chrview is called via jsr
 
 ;==============================================================================;
 chrview_Input:
-	;
+	; joypad input
 
+	rts
+
+;==============================================================================;
+chrview_VBlank:
 	rts
 
 ;==============================================================================;
 chrView_InitDisplay:
 	; --header--
+
 	; line at $2020
+	ldx #$20
+	lda #$08
+	stx PPU_ADDR
+	stx PPU_ADDR
+@line1Loop:
+	sta PPU_DATA
+	dex
+	bne @line1Loop
+
 	; str_chrview_HeaderText
+
 	; line at $2060
+	ldx #$20
+	ldy #$60
+	lda #$08
+	stx PPU_ADDR
+	sty PPU_ADDR
+@line2Loop:
+	sta PPU_DATA
+	dex
+	bne @line2Loop
 
 	; main view
 
@@ -135,10 +188,14 @@ chrView_InitDisplay:
 
 ;==============================================================================;
 chrview_ClearMenu:
+	; add giant clear strings (30 bytes) to vram buffer
+
 	rts
 
 ;==============================================================================;
 chrview_DrawMainMenu:
+	; add strings to vram buffer
+
 	rts
 
 ;==============================================================================;
@@ -146,6 +203,8 @@ chrview_DrawMainMenu:
 ; Called upon changing the active tile to view/edit
 
 chrview_ChangeTile:
+	;
+
 	rts
 
 ;==============================================================================;
@@ -160,8 +219,41 @@ chrview_UpdateTileData:
 	rts
 
 ;==============================================================================;
+; Main Menu Commands
+;==============================================================================;
+; Colors
+;==============================================================================;
+; CHRBANK
+;==============================================================================;
+; SWAPCOL
+;==============================================================================;
+; HFlip
+;==============================================================================;
+; VFlip
+;==============================================================================;
+; Clear
+; Clears the tile data
+
+;==============================================================================;
+; Cut
+; Like Copy, but Clears the tile.
+
+;==============================================================================;
+; Copy
+; Puts the currently selected tile data onto the clipboard.
+
+;==============================================================================;
+; Paste
+; Pastes data from the clipboard into the currently selected tile.
+
+;==============================================================================;
 ; chrview_Undo
 ; Undoes the last action (by writing the previous tile's data)
 
 chrview_Undo:
 	rts
+
+;==============================================================================;
+; Option
+
+;==============================================================================;

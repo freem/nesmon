@@ -4,11 +4,10 @@ chrview is a CHR data viewer and editor.
 The editor functions will only work with CHR-RAM.
 
 ================================================================================
-
 Interface
-=========
+================================================================================
 
-Here is an ASCII diagram of the interface:
+Here is an ASCII diagram of the main menu interface:
 --------------------------------
      CHR DATA VIEWER/EDITOR
 --------------------------------
@@ -23,7 +22,7 @@ Here is an ASCII diagram of the interface:
  |      tile      ||        |
  |      list      |\--------/
  |                |
- |                | PIXEL COLOR
+ |                | PEN COLOR
  |                |
  |                |  0  1  2  3
  |                | [] [] [] []
@@ -37,7 +36,7 @@ Here is an ASCII diagram of the interface:
 
 "Tile list" contains each of the possible 256 tiles in the active bank.
 "Tile editor" allows you to view and edit the tile at 8x resolution.
-"Pixel Color" allows you to pick the active brush color.
+"Pen Color" allows you to pick the active brush color.
 
 The Main Menu:
 * Colors       Change the active color set
@@ -54,8 +53,16 @@ The Main Menu:
 * Exit         Exit chrview (back to monitor)
 
 ================================================================================
+Colors Menu
+================================================================================
+This section allows you to change the current editor display palette.
 
-Options
-=======
+================================================================================
+SWAPCOL Menu
+================================================================================
+Allows you to swap the colors of the current tile.
+
+================================================================================
+Options Menu
+================================================================================
 (todo)
-

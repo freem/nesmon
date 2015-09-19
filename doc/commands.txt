@@ -1,5 +1,7 @@
 nesmon Command Reference
 ========================
+The nesmon Editor is able to recognize a few commands. Most of these are built
+in to nesmon, while others can be excluded at compile time.
 
 ================================================================================
 A (Assemble)
@@ -22,6 +24,19 @@ Usage: C (startaddr) (endaddr) (compare startaddr)
 Example usage:
 C 0300 0320 03A0
 Will compare the blocks of memory at $0300-$0320 and $03A0-$03C0.
+
+================================================================================
+CHRVIEW (CHR Data Viewer/Editor) [Module]
+================================================================================
+CHRVIEW boots the CHR Data Viewer/Editor (a.k.a. "chrview").
+
+Usage: CHRVIEW
+
+chrview is an opt-out module; Define WITHOUT_CHRVIEW if you don't want it
+taking up ROM space. This will prevent the CHRVIEW command from working.
+
+chrview allows you to view the CHR data. If the cart has CHR-RAM, you can edit
+the data as well.
 
 ================================================================================
 CLRAM (Clear User RAM)
@@ -141,7 +156,13 @@ Exits the monitor and returns to the previously running code.
 ================================================================================
 > (Modify Memory)
 ================================================================================
+The humble POKE command, but allows for writing up to 8 bytes.
+
 Usage: > <addr> <values>
+
+Example usage:
+> 0300 08 04 02
+Will write the three bytes $08, $04, and $02 to $0300.
 
 ================================================================================
 ; (Show and Modify Registers)
