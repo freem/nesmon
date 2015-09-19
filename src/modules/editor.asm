@@ -10,15 +10,22 @@
 ;==============================================================================;
 ; Routine naming: editor_*
 ;==============================================================================;
+.ignorenl
+	CURSOR_SPRITE_Y = OAM_BUF+4
+	CURSOR_SPRITE_TILE = OAM_BUF+5
+	CURSOR_SPRITE_ATTR = OAM_BUF+6
+	CURSOR_SPRITE_X = OAM_BUF+7
+
+	CURSOR_TILE_ON  = 1
+	CURSOR_TILE_OFF = 2
+.endinl
 
 ;==============================================================================;
 ; editor_Init
 ; Setup for the editor module
 
 editor_Init:
-	; do real initialization
-
-	; init display
+	; --welcome message--
 	; prepare header
 	ldx #$20
 	ldy #$21
@@ -53,6 +60,13 @@ editor_Init:
 	lda #1
 	sta runNormalVBuf
 
+	; --cursor--
+	; reset cursor cell
+	ldx #1
+	stx edcurDispX
+	inx
+	stx edcurDispY
+
 	; execution falls through
 ;==============================================================================;
 ; editor_MainLoop
@@ -60,17 +74,73 @@ editor_Init:
 
 editor_MainLoop:
 	; --before vblank--
-	; react to input
+	jsr editor_HandleInput	; handle input
+	jsr editor_UpdateCursorSprite
 
 	; --vblank--
 	jsr ppu_WaitVBL
 
 	; --after vblank--
-	; get input for next frame
+	jsr editor_GetInput		; get input for next frame
+	
 
 	jmp editor_MainLoop
 
 ;==============================================================================;
 ; editor_PrintLine
 ; Prints a line of text to the screen.
+editor_PrintLine:
+	rts
 
+;==============================================================================;
+; editor_UpdateCursorSprite
+; Updates the cursor sprite
+editor_UpdateCursorSprite:
+	; sprite X position
+	lda edcurDispX
+	; multiply by 8
+	asl
+	asl
+	asl
+	sta CURSOR_SPRITE_X
+
+	; sprite Y position
+	lda edcurDispY
+	; multiply by 8
+	asl
+	asl
+	asl
+	; subtract 1
+	sec
+	sbc #1
+	sta CURSOR_SPRITE_Y
+
+	; sprite frame
+	; xxx: should blink every second (60/50 frames depending on NTSC/PAL)
+	lda #CURSOR_TILE_ON
+	sta CURSOR_SPRITE_TILE
+
+	; sprite attributes
+	lda #%00000000
+	sta CURSOR_SPRITE_ATTR
+
+	rts
+
+;==============================================================================;
+; editor_GetInput
+; Gets input for this frame.
+
+editor_GetInput:
+	; controller input
+
+	; check which keyboard is active and get its input accordingly
+	; software keyboard input
+	; hardware keyboard input
+	rts
+
+;==============================================================================;
+; editor_HandleInput
+; Handles the input
+
+editor_HandleInput:
+	rts
