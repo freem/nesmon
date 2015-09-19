@@ -144,6 +144,23 @@ ppu_WaitVBL:
 	rts
 
 ;==============================================================================;
+; ppu_HideSprites
+; Hides all sprites by moving them off-screen.
+
+; (Clobbers)
+; A            Used for data writing
+; X            Used for index into OAM_BUF
+
+ppu_HideSprites:
+	ldx #0
+	lda #$FF
+@hideSpr:
+	sta OAM_BUF,x
+	inx
+	bne @hideSpr
+	rts
+
+;==============================================================================;
 
 
 ;==============================================================================;
