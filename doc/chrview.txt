@@ -30,7 +30,7 @@ Here is an ASCII diagram of the interface:
  |                | [] [] [] []
  |                |
 -+----------------+-------------
- COLORS   HFLIP  CUT    ???????
+ COLORS   HFLIP  CUT    UNDO
  CHRBANK  VFLIP  COPY   OPTION
  SWAPCOL  CLEAR  PASTE  EXIT
 --------------------------------
@@ -49,7 +49,7 @@ The Main Menu:
 * Cut          Copies the current tile to the clipboard and clears the entry
 * Copy         Copies the current tile to the clipboard
 * Paste        Pastes the current tile from the clipboard
-* ???????      (currently undefined option)
+* Undo         Undoes the previous action
 * Option       chrview Options
 * Exit         Exit chrview (back to monitor)
 
