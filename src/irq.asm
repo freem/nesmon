@@ -3,6 +3,10 @@
 ; IRQ/BRK handler (pretty important in a monitor program)
 ;==============================================================================;
 IRQ:
+	rti
+
+; hm.... this needs a lot of work.
+.if 0
 	; save a,x,y
 	sta int_regA
 	stx int_regX
@@ -73,6 +77,7 @@ IRQ_end:
 	ldx int_regX
 	ldy int_regY
 	rti
+.endif
 
 ;==============================================================================;
 ; DummyUserIRQ
