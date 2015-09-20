@@ -29,6 +29,10 @@ chr_charset:
 	.incbin "charsets_1bpp/charset5.chr"
 .endif
 
+.ifdef CHARSET6
+	.incbin "charsets_1bpp/charset6.chr"
+.endif
+
 ; GIANT IFNDEF SWITCH OF DOOM
 ; You MUST edit this if you add a new character set.
 
@@ -38,7 +42,9 @@ chr_charset:
 	.ifndef CHARSET3
 	.ifndef CHARSET4
 	.ifndef CHARSET5
+	.ifndef CHARSET6
 		.error "No valid CHARSET defined, or src/charsets_1bpp/charset.asm needs to be edited"
+	.endif ;charset6
 	.endif ;charset5
 	.endif ;charset4
 	.endif ;charset3

@@ -32,3 +32,7 @@ Batman: Return of the Joker-style (title screen) character set
 CHARSET5/charset5.chr
 ---------------------
 Commodore 64 charset (ripped from VICE's chargen file; thanks)
+
+CHARSET6/charset6.chr
+---------------------
+"Futuristic" character set
