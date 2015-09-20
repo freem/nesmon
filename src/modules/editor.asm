@@ -11,6 +11,7 @@
 ; Routine naming: editor_*
 ;==============================================================================;
 .ignorenl
+	; cursor defines
 	CURSOR_SPRITE_Y = OAM_BUF+4
 	CURSOR_SPRITE_TILE = OAM_BUF+5
 	CURSOR_SPRITE_ATTR = OAM_BUF+6
@@ -34,20 +35,11 @@ editor_Init:
 	sta edcursorX
 	sta curLineEnd
 	sta curNumChars
-
-	; hm... what to do about these?
-	; editLineNum
-	; editScrollY
-	; editScrollNT
+	sta editScrollY
+	sta editScrollNT
 
 	; clear line buffer
 	jsr editor_ClearLineBuf
-
-	; set user NMI
-	;lda #<editor_VBlank
-	;ldx #>editor_VBlank
-	;sta userNMILoc
-	;stx userNMILoc+1
 
 	; clear module ram
 	jsr nesmon_ClearModuleRAM
@@ -95,6 +87,11 @@ editor_Init:
 	stx edcurDispX
 	inx
 	stx edcurDispY
+
+	; this is a system variable, but it makes more sense to define it here
+	lda #1
+	sta editLineNum
+
 	; blinkenstein 3d
 	lda #0
 	sta edcurBlink
@@ -119,8 +116,10 @@ editor_MainLoop:
 	cmp #20					; this value subject to change
 	bne @noBlinking
 
+	; reset timer
 	lda #0
 	sta timer1
+	; change blink state
 	lda edcurBlink
 	eor #1
 	sta edcurBlink
@@ -131,21 +130,18 @@ editor_MainLoop:
 	jmp editor_MainLoop
 
 ;==============================================================================;
-; editor_VBlank
-; Things the editor does every vblank
-
-editor_VBlank:
-	jmp NMI_end
-
-;==============================================================================;
 ; editor_PrintLine
 ; Prints a line of text to the screen.
+
 editor_PrintLine:
+	; find current position
+
 	rts
 
 ;==============================================================================;
 ; editor_UpdateCursorSprite
-; Updates the cursor sprite
+; Updates the cursor sprite.
+
 editor_UpdateCursorSprite:
 	; sprite X position
 	lda edcurDispX
@@ -190,29 +186,28 @@ editor_GetInput:
 	bne @hwKeyboard
 
 	; --software keyboard input--
-	jmp @end
+	rts
 
 @hwKeyboard:
 	; --hardware keyboard input--
 
-	; get ReadKeys routine (xxx: broken)
+	; get ReadKeys routine from the jump table
 	lda hardkbJumpTable
 	sta tmp00
 	iny
 	lda hardkbJumpTable+1
 	sta tmp01
 
+	; set up routine
 	ldy #KBROUTINE_GETKEYS
 	lda (tmp00),y
 	sta tmp02
 	iny
 	lda (tmp00),y
 	sta tmp03
+
 	; do ReadKeys
 	jmp (tmp02)
-
-@end:
-	rts
 
 ;==============================================================================;
 ; editor_HandleInput
@@ -221,10 +216,14 @@ editor_GetInput:
 editor_HandleInput:
 	; oh boy this is going to be fun!
 
+	; --SPECIAL KEYS--
+	; Enter: typically sends the current line to the command parser
+
 	rts
 
 ;==============================================================================;
 ; editor_ClearLineBuf
+; Clears the contents of the line buffer.
 
 editor_ClearLineBuf:
 	lda #0
