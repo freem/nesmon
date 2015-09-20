@@ -94,8 +94,10 @@ vbstr_chrview_Exit:
 chrview_Init:
 	; --system variable initialization--
 	; set user NMI
-	; chrview_VBlank
-	; userNMILoc
+	;ldx #<chrview_VBlank
+	;ldy #>chrview_VBlank
+	;stx userNMILoc
+	;sty userNMILoc+1
 
 	; clear module ram
 	jsr nesmon_ClearModuleRAM

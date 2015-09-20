@@ -68,6 +68,7 @@ it will be skipped.
 +--------------+---------------------------------------------------------------+
 |Reset         | Resets keyboard status
 |GetKeys       | Read Input (raw)
++--------------+---------------------------------------------------------------+
 |ShowBoard     | Show Keyboard Display (currently only used by SoftKB)
 |HideBoard     | Hide Keyboard Display (currently only used by SoftKB)
 +--------------+---------------------------------------------------------------+

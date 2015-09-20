@@ -18,16 +18,10 @@ str_cmdHandler_InvModule:	.db "NO SUCH MODULE"
 
 ;==============================================================================;
 ; [Command Tables]
+; this needs some proper thought.
 
-; single character routines
-tbl_cmdHandler_Simple: .db "ACDFGHJMRTX>;"
-
-; multiple character routines, split by first character
-
-
-; master routine table
-tbl_cmdHandler_Routines:
-	.dw $0000
+; The master command table is in alphabetical order.
+; The specifics after that are very hazy and require research.
 
 ;==============================================================================;
 ; cmdHandler_Parse
@@ -45,6 +39,8 @@ cmdHandler_Parse:
 ;==============================================================================;
 ; CLS
 cmdHandler_Cls:
+	; turn off drawing
+
 	; clear nametables
 
 	; reset line and scroll
@@ -67,6 +63,7 @@ cmdHandler_Cls:
 	; redraw software keyboard
 
 @end:
+	; resume drawing
 	rts
 
 ;==============================================================================;
@@ -104,7 +101,7 @@ cmdHandler_X:
 	; exit monitor
 	lda #0
 	sta inMonitor
-	; hm.
+	; hm. is this the right thing to do?
 	rts
 
 ;==============================================================================;
@@ -126,6 +123,17 @@ cmdHandler_R
 	rts
 
 ;==============================================================================;
+; ; (Show and Modify Registers)
+; The command is named Edit because naming a command ";" sucks.
+cmdHandler_REdit:
+	; print register labels
+
+	; print registers on next used line
+
+	; put registers into line buffer
+	rts
+
+;==============================================================================;
 ; CHRVIEW
 cmdHandler_CHRVIEW:
 ; if not enabled
@@ -136,3 +144,18 @@ cmdHandler_CHRVIEW:
 	; run CHRVIEW
 	jsr chrview_Init	; has to provide rts
 .endif
+
+;==============================================================================;
+; F
+cmdView_F:
+	; fill memory from startaddr to endaddr with byte
+
+	rts
+
+;==============================================================================;
+; > (a.k.a. POKE)
+cmdView_Poke:
+	
+	rts
+
+;==============================================================================;
