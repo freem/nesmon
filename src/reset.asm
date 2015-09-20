@@ -68,15 +68,15 @@ Reset:
 	jsr ppu_HideSprites
 
 	; set default user NMI
-	ldx #<DummyUserNMI
-	ldy #>DummyUserNMI
-	stx userNMILoc
-	sty userNMILoc+1
+	lda #<DummyUserNMI
+	ldx #>DummyUserNMI
+	sta userNMILoc
+	stx userNMILoc+1
 	; set default user IRQ
-	ldx #<DummyUserIRQ
-	ldy #>DummyUserIRQ
-	stx userIRQLoc
-	sty userIRQLoc+1
+	lda #<DummyUserIRQ
+	ldx #>DummyUserIRQ
+	sta userIRQLoc
+	stx userIRQLoc+1
 
 	; set hardware keyboard jump table addr
 	; xxx: needs edits for when multi-keyboard support is added
