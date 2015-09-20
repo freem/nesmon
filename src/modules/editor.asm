@@ -215,8 +215,13 @@ editor_GetInput:
 
 editor_HandleInput:
 	; oh boy this is going to be fun!
+	; --joypad--
 
-	; --SPECIAL KEYS--
+	; --software keyboard--
+
+	; --hardware keyboard--
+
+	; [SPECIAL KEYS]
 	; Enter: typically sends the current line to the command parser
 
 	rts
