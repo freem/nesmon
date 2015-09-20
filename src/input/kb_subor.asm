@@ -18,7 +18,8 @@ KBSignature_Subor:
 ;==============================================================================;
 ; Keyboard Driver Jump Table
 kbDriver_Subor:
-	.dw $0000
+	.dw kbSubor_Reset		; Reset
+	.dw kbSubor_GetKeys		; GetKeys
 
 ;==============================================================================;
 kbSubor_Reset:

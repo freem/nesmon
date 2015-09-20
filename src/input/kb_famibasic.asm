@@ -28,12 +28,84 @@ KBSignature_HVC007:
 ;==============================================================================;
 ; Keyboard Driver Jump Table
 kbDriver_HVC007:
-	.dw $0000
+	.dw kbHVC007_Reset		; Reset
+	.dw kbHVC007_GetKeys	; GetKeys
 
 ;==============================================================================;
+; kbHVC007_Reset
+; Resets the keyboard to the first row.
+
 kbHVC007_Reset:
+	lda #%00000101
+	sta JOYSTICK1
 	rts
+
 ;==============================================================================;
+; kbHVC007_GetKeys
+; Reads input from the keyboard and stores it in hardkbKeyStatus.
+
 kbHVC007_GetKeys:
+	; prepare keyboard
+	lda #%00000101
+	sta JOYSTICK1
+
+	; wait 16 cycles
+	; todo: can this be shorter?
+	pha ; 3
+	pla ; +4 (7)
+	pha ; +3 (10)
+	pla ; +4 (14)
+	nop ; +2 (16)
+
+	; prepare loop counter
+	ldx #0
+@doRow:
+	; keyboard read (column 0)
+	lda #%00000100
+	sta JOYSTICK1
+
+	; wait 56 cycles
+	jsr kbHVC007_ReadWait
+
+	; get column 0 data from JOYSTICK2
+	lda JOYSTICK2
+	lsr
+	and #$0F
+	sta hardkbKeyStatus,x
+
+	; keyboard read (column 1)
+	lda #%00000110
+	sta JOYSTICK1
+
+	; wait 56 cycles
+	jsr kbHVC007_ReadWait
+
+	; get column 1 data from JOYSTICK2
+	lda JOYSTICK2
+	asl
+	asl
+	asl
+	and #$F0
+	ora hardkbKeyStatus,x
+	sta hardkbKeyStatus,x
+
+	; check if we're done
+	inx
+	cpx #9
+	bne @doRow
+
 	rts
 ;==============================================================================;
+; kbHVC007_ReadWait
+; Routine used to burn 58 cycles while waiting for reading keys.
+
+; nocash docs say the wait is only 56 cycles
+
+kbHVC007_ReadWait:
+	; 6 cycles from the jsr
+	ldy #8				; 2
+@burnClock:
+	dey					; 2*8
+	bne @burnClock		; (3*8) + 2
+	nop					; 2
+	rts					; 6

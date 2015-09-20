@@ -25,6 +25,19 @@
 ; Setup for the editor module
 
 editor_Init:
+	; --system variable initialization--
+
+	; set user NMI
+	;ldx #<editor_VBlank
+	;ldy #>editor_VBlank
+	;stx userNMILoc
+	;sty userNMILoc+1
+
+	; clear module ram
+	jsr nesmon_ClearModuleRAM
+
+	; --module variable initialization--
+
 	; --welcome message--
 	; prepare header
 	ldx #$20
@@ -87,6 +100,10 @@ editor_MainLoop:
 	jmp editor_MainLoop
 
 ;==============================================================================;
+editor_VBlank:
+	rts
+
+;==============================================================================;
 ; editor_PrintLine
 ; Prints a line of text to the screen.
 editor_PrintLine:
@@ -131,11 +148,35 @@ editor_UpdateCursorSprite:
 ; Gets input for this frame.
 
 editor_GetInput:
-	; controller input
+	; --controller input--
 
 	; check which keyboard is active and get its input accordingly
-	; software keyboard input
-	; hardware keyboard input
+	lda activeKBType
+	bne @hwKeyboard
+
+	; --software keyboard input--
+	jmp @end
+
+@hwKeyboard:
+	; --hardware keyboard input--
+
+	; get ReadKeys routine (xxx: broken)
+	lda hardkbJumpTable
+	sta tmp00
+	iny
+	lda hardkbJumpTable+1
+	sta tmp01
+
+	ldy #2				; xxx: hardcoded index into Keyboard Driver Jump Table
+	lda (tmp00),y
+	sta tmp02
+	iny
+	lda (tmp00),y
+	sta tmp03
+	; do ReadKeys
+	jmp (tmp02)
+
+@end:
 	rts
 
 ;==============================================================================;
