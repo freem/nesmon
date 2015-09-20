@@ -30,8 +30,8 @@ KBSignature_HVC007:
 kbDriver_HVC007:
 	.dw kbHVC007_Reset		; Reset
 	.dw kbHVC007_GetKeys	; GetKeys
-	.dw kbHVC007_KeyDown	;
-	.dw kbHVC007_KeyUp		;
+	.dw kbHVC007_KeyDown	; KeyDown
+	.dw kbHVC007_KeyUp		; KeyUp
 
 ;==============================================================================;
 ; kbHVC007_Reset
@@ -46,18 +46,19 @@ kbHVC007_Reset:
 ; kbHVC007_GetKeys
 ; Reads input from the keyboard and stores it in hardkbKeyStatus.
 
+; Does not perform any transformation on the values, so a pressed key will have
+; a bit value of 0, and an inactive key will be 1.
+
 kbHVC007_GetKeys:
 	; prepare keyboard
 	lda #%00000101
 	sta JOYSTICK1
 
 	; wait 16 cycles
-	; todo: can this be shorter?
-	pha ; 3
-	pla ; +4 (7)
-	pha ; +3 (10)
-	pla ; +4 (14)
-	nop ; +2 (16)
+	ldy #3					; 2 cycles, 2 bytes
+@waitLoop:
+	dey						; 2 cycles, 1 byte
+	bne @waitLoop			; 2+1 cycles, 2 bytes
 
 	; prepare loop counter
 	ldx #0
@@ -115,9 +116,21 @@ kbHVC007_ReadWait:
 	rts					; 6
 
 ;==============================================================================;
+; kbHVC007_KeyDown
+; Checks if a specific key is down.
+
+; (Params)
+; ?
+
 kbHVC007_KeyDown:
 	rts
 
 ;==============================================================================;
+; kbHVC007_KeyUp
+; Checks if a specific key is up.
+
+; (Params)
+; ?
+
 kbHVC007_KeyUp:
 	rts
