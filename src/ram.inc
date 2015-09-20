@@ -62,7 +62,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	resetStringBuf      .dsb 6		; reset detection string
 
 	;--------------------------------------------------------------------------;
-	; [nesmon system vars] { 8 bytes }
+	; [nesmon system vars] { 9 bytes }
 	int_ppuCtrl         .dsb 1		; internal copy of PPU_CTRL
 	int_ppuMask         .dsb 1		; internal copy of PPU_MASK
 	int_scrollX         .dsb 1		; internal copy of PPU_SCROLL write 1
@@ -71,6 +71,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 	cartPRGRAM          .dsb 1		; cart PRG RAM status
 	activeKBType        .dsb 1		; current keyboard type (0=software, 1=hardware)
 	hardKBType          .dsb 1		; (future) variable for hardware keyboard type (0=HVC-007; 1=Subor; 2=PEC)
+	timer1              .dsb 1		; 1-byte general purpose timer
 
 	;--------------------------------------------------------------------------;
 	; [editor related]
