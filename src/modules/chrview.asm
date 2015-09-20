@@ -93,11 +93,6 @@ vbstr_chrview_Exit:
 ;==============================================================================;
 chrview_Init:
 	; --system variable initialization--
-	; set user NMI
-	;ldx #<chrview_VBlank
-	;ldy #>chrview_VBlank
-	;stx userNMILoc
-	;sty userNMILoc+1
 
 	; clear module ram
 	jsr nesmon_ClearModuleRAM
@@ -145,11 +140,6 @@ chrview_Finish:
 ;==============================================================================;
 chrview_HandleInput:
 	; handle joypad input
-
-	rts
-
-;==============================================================================;
-chrview_VBlank:
 	rts
 
 ;==============================================================================;
