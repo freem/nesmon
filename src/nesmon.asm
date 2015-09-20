@@ -115,6 +115,7 @@ nesmon_ClearModuleRAM:
 
 ;------------------------------------------------------------------------------;
 ; keyboard routines
+.include "input/keyboard.inc"
 .include "input/kb_soft.asm" ; always include software keyboard
 
 .ifndef KB_FAMIBASIC

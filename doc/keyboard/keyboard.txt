@@ -68,6 +68,8 @@ it will be skipped.
 +--------------+---------------------------------------------------------------+
 |Reset         | Resets keyboard status
 |GetKeys       | Read Input (raw)
+|KeyDown       | Test if a specified key is pressed.
+|KeyUp         | Test if a specified key is released.
 +--------------+---------------------------------------------------------------+
 |ShowBoard     | Show Keyboard Display (currently only used by SoftKB)
 |HideBoard     | Hide Keyboard Display (currently only used by SoftKB)

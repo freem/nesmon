@@ -27,6 +27,10 @@
 editor_Init:
 	; --system variable initialization--
 
+	; TEMPORARY
+	;lda #1
+	sta activeKBType
+
 	; set user NMI
 	;ldx #<editor_VBlank
 	;ldy #>editor_VBlank
@@ -167,7 +171,7 @@ editor_GetInput:
 	lda hardkbJumpTable+1
 	sta tmp01
 
-	ldy #2				; xxx: hardcoded index into Keyboard Driver Jump Table
+	ldy #KBROUTINE_GETKEYS
 	lda (tmp00),y
 	sta tmp02
 	iny

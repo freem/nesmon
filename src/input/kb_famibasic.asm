@@ -30,6 +30,8 @@ KBSignature_HVC007:
 kbDriver_HVC007:
 	.dw kbHVC007_Reset		; Reset
 	.dw kbHVC007_GetKeys	; GetKeys
+	.dw kbHVC007_KeyDown	;
+	.dw kbHVC007_KeyUp		;
 
 ;==============================================================================;
 ; kbHVC007_Reset
@@ -95,7 +97,8 @@ kbHVC007_GetKeys:
 	bne @doRow
 
 	rts
-;==============================================================================;
+
+;------------------------------------------------------------------------------;
 ; kbHVC007_ReadWait
 ; Routine used to burn 58 cycles while waiting for reading keys.
 
@@ -107,5 +110,14 @@ kbHVC007_ReadWait:
 @burnClock:
 	dey					; 2*8
 	bne @burnClock		; (3*8) + 2
-	nop					; 2
+	; todo: test if this nop is needed on hardware
+	;nop					; 2
 	rts					; 6
+
+;==============================================================================;
+kbHVC007_KeyDown:
+	rts
+
+;==============================================================================;
+kbHVC007_KeyUp:
+	rts
