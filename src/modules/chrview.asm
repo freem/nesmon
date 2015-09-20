@@ -125,12 +125,13 @@ chrview_Init:
 ;------------------------------------------------------------------------------;
 chrview_MainLoop:
 	; --before vblank--
+	jsr chrview_HandleInput
 
 	; --vblank--
 	jsr ppu_WaitVBL
 
 	; --after vblank--
-	jsr chrview_Input
+	; get input
 
 @mainLoop_end:
 	jmp chrview_MainLoop
@@ -142,8 +143,8 @@ chrview_Finish:
 	rts					; chrview is called via jsr
 
 ;==============================================================================;
-chrview_Input:
-	; joypad input
+chrview_HandleInput:
+	; handle joypad input
 
 	rts
 
@@ -178,13 +179,44 @@ chrView_InitDisplay:
 	dex
 	bne @line2Loop
 
-	; main view
+	; top frames
 
-	; zoomed view
+	; main view (tiles begin at $20C2; frame begins at $20C1, ends at $20D2)
 
-	; "pixel color" area
+	; zoomed view (tiles begin at $20D4; frame begins at $20D3, ends at $20DC)
+
+	; $21D3: bottom frame of zoomed area
+
+	; "pen color" label ($2214)
+
+	; numbers ($2255)
+
+	; swatches ($2294)
+
+	; bottom frame ($22C0)
+	ldx #$22
+	ldy #$C0
+	lda #$08
+	stx PPU_ADDR
+	sty PPU_ADDR
+	sta PPU_DATA
+	ldx #$09
+	stx PPU_DATA
+	; 16 more of A
+	; one more X
+	; final 13 A
 
 	; main menu
+
+	; bottommost line at $2380
+	ldx #$23
+	lda #$80
+	stx PPU_ADDR
+	stx PPU_ADDR
+@lineXLoop:
+	sta PPU_DATA
+	dex
+	bne @lineXLoop
 
 	rts
 
