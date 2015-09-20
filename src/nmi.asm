@@ -28,7 +28,7 @@ NMI:
 
 @userMode:
 	; user mode NMI
-	jsr (userNMILoc)
+	jmp (userNMILoc)
 
 NMI_end:
 	; set scroll
