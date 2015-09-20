@@ -92,33 +92,9 @@ Reset:
 	stx hardkbJumpTable
 	sty hardkbJumpTable+1
 
-	; check for WRAM at $6000-$7FFF
-	; xxx: only checks $6000; MMC6's RAM starts at $7000
-	lda $6000
-	sta tmp00			; save original value
-	lda #$AA
-	sta $6000			; write new value
-	lda $6000
-	cmp tmp00			; compare
-	beq @noWRAM6000
+	; perform wram checks
+	jsr wram_Check6000
 
-	; WRAM exists at $6000 (and hopefully up to $7FFF)
-	lda cartPRGRAM
-	ora #%00000001
-	sta cartPRGRAM
-
-	; clear things we've messed with
-	lda #0
-	sta $6000
-	sta tmp00
-	jmp @afterWRAM6000
-
-@noWRAM6000:
-	lda cartPRGRAM
-	and #%11111110
-	sta cartPRGRAM
-
-@afterWRAM6000:
 	; (todo: other non-PPU related setup)
 
 	; Mapper-specific setup code

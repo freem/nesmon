@@ -95,6 +95,7 @@ resetString: .db "nesmon"
 ; general system routines
 .include "routines_ppu.asm"
 .include "routines_io.asm"
+.include "routines_wram.asm"
 
 ;------------------------------------------------------------------------------;
 ; general nesmon routines
