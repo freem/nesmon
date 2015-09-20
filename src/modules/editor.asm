@@ -25,17 +25,29 @@
 ; Setup for the editor module
 
 editor_Init:
-	; --system variable initialization--
-
 	; TEMPORARY
-	;lda #1
+	lda #1
 	sta activeKBType
 
+	; --system variable initialization--
+	lda #0
+	sta edcursorX
+	sta curLineEnd
+	sta curNumChars
+
+	; hm... what to do about these?
+	; editLineNum
+	; editScrollY
+	; editScrollNT
+
+	; clear line buffer
+	jsr editor_ClearLineBuf
+
 	; set user NMI
-	;ldx #<editor_VBlank
-	;ldy #>editor_VBlank
-	;stx userNMILoc
-	;sty userNMILoc+1
+	;lda #<editor_VBlank
+	;ldx #>editor_VBlank
+	;sta userNMILoc
+	;stx userNMILoc+1
 
 	; clear module ram
 	jsr nesmon_ClearModuleRAM
@@ -77,12 +89,16 @@ editor_Init:
 	lda #1
 	sta runNormalVBuf
 
-	; --cursor--
+	; --cursor (visual)--
 	; reset cursor cell
 	ldx #1
 	stx edcurDispX
 	inx
 	stx edcurDispY
+	; blinkenstein 3d
+	lda #0
+	sta edcurBlink
+	sta timer1
 
 	; execution falls through
 ;==============================================================================;
@@ -98,14 +114,28 @@ editor_MainLoop:
 	jsr ppu_WaitVBL
 
 	; --after vblank--
+	inc timer1
+	lda timer1
+	cmp #20					; this value subject to change
+	bne @noBlinking
+
+	lda #0
+	sta timer1
+	lda edcurBlink
+	eor #1
+	sta edcurBlink
+
+@noBlinking:
 	jsr editor_GetInput		; get input for next frame
-	
 
 	jmp editor_MainLoop
 
 ;==============================================================================;
+; editor_VBlank
+; Things the editor does every vblank
+
 editor_VBlank:
-	rts
+	jmp NMI_end
 
 ;==============================================================================;
 ; editor_PrintLine
@@ -137,8 +167,9 @@ editor_UpdateCursorSprite:
 	sta CURSOR_SPRITE_Y
 
 	; sprite frame
-	; xxx: should blink every second (60/50 frames depending on NTSC/PAL)
 	lda #CURSOR_TILE_ON
+	clc
+	adc edcurBlink
 	sta CURSOR_SPRITE_TILE
 
 	; sprite attributes
@@ -188,4 +219,18 @@ editor_GetInput:
 ; Handles the input
 
 editor_HandleInput:
+	; oh boy this is going to be fun!
+
+	rts
+
+;==============================================================================;
+; editor_ClearLineBuf
+
+editor_ClearLineBuf:
+	lda #0
+	ldx #30
+@clearBuf:
+	sta curLineBuf,x
+	dex
+	bpl @clearBuf
 	rts
