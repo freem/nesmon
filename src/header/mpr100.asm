@@ -8,7 +8,7 @@
 ; Configuration
 .ignorenl
 	; Mirroring: 0=Horizontal, 1=Vertical
-	HDR_MIRRORING = 0
+	HDR_MIRRORING = 1
 	; Not permanent; you can change the mirroring and mapping on the fly.
 
 	; Battery-backed SRAM

@@ -10,7 +10,7 @@
 ; Configuration
 .ignorenl
 	; Mirroring: 0=Horizontal, 1=Vertical
-	HDR_MIRRORING = 0
+	HDR_MIRRORING = 1
 
 	; Battery-backed SRAM
 	HDR_BATTERY = 0
