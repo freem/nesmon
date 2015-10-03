@@ -2,6 +2,11 @@ nesmon - a native NES/Famicom monitor program
 =============================================
 ! Super Warning !
 This is a work in progress and is not "production ready".
+
+(Hell, at this point, it doesn't even output keyboard strokes to the screen!
+It does manage to read them... as long as you're using the Family BASIC
+keyboard and not the Subor or PEC-586 ones.)
+
 ================================================================================
 [Table of Contents]
  1.      Introduction

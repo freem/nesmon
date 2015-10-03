@@ -75,6 +75,10 @@ it will be skipped.
 |HideBoard     | Hide Keyboard Display (currently only used by SoftKB)
 +--------------+---------------------------------------------------------------+
 
+Tentative routines:
+* SetFlags - set the status of various variables (e.g. Ctrl, Shift, etc.)
+  based on input.
+
 Keyboard Variables
 ==================
 * hardkbJumpTable
