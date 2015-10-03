@@ -9,6 +9,7 @@ charsets_1bpp/         1BPP character sets
 	charset3.chr       Capcom-style character set
 	charset4.chr       Batman: Return of the Joker-style (title screen) character set
 	charset5.chr       Commodore 64 charset
+	charset6.chr       "Futuristic" character set
 	hexparts.chr       Small hex digits for each side of an 8x8 tile
 
 header/                NES 2.0 headers
@@ -20,6 +21,7 @@ input/                 Input code (Keyboards, etc.)
 	kb_famibasic.asm   Family BASIC keyboard
 	kb_soft.asm        Software keyboard
 	kb_subor.asm       Subor keyboard
+	keyboard.inc       Global Keyboard driver includes
 
 mapper/                Mapper-specific code
 	fme7.asm           Sunsoft FME-7 mapper code
@@ -31,6 +33,7 @@ modules/               nesmon Modules
 	microasm.asm       Micro 6502 Assembler
 	tapemod.asm        Cassette tape routines
 
+datetime.lua           Lua script for generating "datetime.bin"
 irq.asm                IRQ/BRK handler (pretty important in a monitor program)
 Makefile               GNU makefile for creating the project
 nes.inc                hardware defines
@@ -41,3 +44,4 @@ ram.inc                RAM defines
 reset.asm              Reset code
 routines_io.asm        NES hardware I/O routines
 routines_ppu.asm       Routines that use the PPU hardware
+routines_wram.asm      Routines that involve WRAM access/modification
