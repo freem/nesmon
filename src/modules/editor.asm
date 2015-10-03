@@ -157,7 +157,7 @@ editor_UpdateCursorSprite:
 	asl
 	asl
 	asl
-	; subtract 1
+	; subtract 1 for proper positioning
 	sec
 	sbc #1
 	sta CURSOR_SPRITE_Y
@@ -180,6 +180,7 @@ editor_UpdateCursorSprite:
 
 editor_GetInput:
 	; --controller input--
+	jsr io_ReadJoySafe
 
 	; check which keyboard is active and get its input accordingly
 	lda activeKBType
@@ -216,11 +217,14 @@ editor_GetInput:
 editor_HandleInput:
 	; oh boy this is going to be fun!
 	; --joypad--
+	; we only need a few things here
 
 	; --software keyboard--
+@handleInput_SoftKB:
+	
 
 	; --hardware keyboard--
-
+@handleInput_HWKB:
 	; [SPECIAL KEYS]
 	; Enter: typically sends the current line to the command parser
 

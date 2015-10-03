@@ -117,20 +117,22 @@ kbHVC007_ReadWait:
 
 ;==============================================================================;
 ; kbHVC007_KeyDown
-; Checks if a specific key is down.
+; Checks if a specific key is down (pressed).
 
 ; (Params)
 ; ?
 
 kbHVC007_KeyDown:
+	
 	rts
 
 ;==============================================================================;
 ; kbHVC007_KeyUp
-; Checks if a specific key is up.
+; Checks if a specific key is up (released).
 
 ; (Params)
 ; ?
 
 kbHVC007_KeyUp:
+	
 	rts
