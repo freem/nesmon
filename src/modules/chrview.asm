@@ -8,15 +8,19 @@
 ; Routine naming: chrview_*
 ;==============================================================================;
 ; [Module RAM definitions]
-; you'd think these would be GOOD to have in the NL, but conflicting addresses
-; make this a bummer.
+; You'd THINK these would be good to have in the NL, but since the addresses
+; conflict with other modules, it's a bummer.
 
 	; remember, 64 bytes maximum.
 .ignorenl
-	CHRVIEW_CURSORPOS     = moduleRAM		; current cursor position
+	CHRVIEW_CURSORPOS     = moduleRAM		; current cursor position (menu, tile select, etc.)
 	CHRVIEW_SECTION       = moduleRAM+$01	; current active section/command (0=main menu,1=select tile,2=select color,3=edit tile,4=COLORS,5=SWAPCOL,6=options,7=CHRBANK)
-	CHRVIEW_TILE_ADDR_H   = moduleRAM+$02	; ppu address of current tile (low byte)
-	CHRVIEW_TILE_ADDR_L   = moduleRAM+$03	; ppu address of current tile (high byte)
+	CHRVIEW_CURTILE_IDX   = moduleRAM+$02	; current active/selected tile index ($00-$FF); NOT select tile mode cursor!
+	CHRVIEW_TILE_ADDR_H   = moduleRAM+$03	; ppu address of current tile (low byte)
+	CHRVIEW_TILE_ADDR_L   = moduleRAM+$04	; ppu address of current tile (high byte)
+	CHRVIEW_PENCOLOR      = moduleRAM+$05	; current pen/pixel color (0-3)
+	CHRVIEW_EDITX         = moduleRAM+$06	; cursor X position in tile edit mode
+	CHRVIEW_EDITY         = moduleRAM+$07	; cursor Y position in tile edit mode
 	; add new stuff here (up to $0F)
 	;--everything below this line is fixed--;
 	CHRVIEW_TILEBUF_EDIT  = moduleRAM+$10	; (16 bytes)
@@ -30,7 +34,7 @@
 ;==============================================================================;
 ; [Tables]
 
-; nametable addresses for cursors
+; nametable addresses for main menu cursor
 tbl_chrview_MenuCursorAddr:
 	.db $23,$01		;  0: Colors
 	.db $23,$21		;  1: CHRBANK
@@ -50,8 +54,8 @@ tbl_chrview_MenuCursorAddr:
 
 str_chrview_HeaderText:		.db "CHR DATA VIEWER/EDITOR"
 
-vbstr_chrview_PixColor:
-	.db $22,$14,6,"PIXEL COLOR"
+vbstr_chrview_PenColor:
+	.db $22,$14,6,"PEN COLOR"
 
 ; --Menu Choices--
 vbstr_chrview_Colors:
@@ -126,7 +130,7 @@ chrview_MainLoop:
 	jsr ppu_WaitVBL
 
 	; --after vblank--
-	; get input
+	jsr io_ReadJoySafe
 
 @mainLoop_end:
 	jmp chrview_MainLoop
@@ -139,7 +143,112 @@ chrview_Finish:
 
 ;==============================================================================;
 chrview_HandleInput:
-	; handle joypad input
+	; how the input is handled depends on the value of CHRVIEW_SECTION
+	lda CHRVIEW_SECTION
+	asl
+	tay
+	lda tbl_chrview_InputHandlers,y
+	sta tmp00
+	lda tbl_chrview_InputHandlers+1,y
+	sta tmp01
+	jmp (tmp01)
+	; input handlers must issue their own rts
+;------------------------------------------------------------------------------;
+tbl_chrview_InputHandlers:
+	.dw chrView_Input_MainMenu		; 0=main menu
+	.dw chrView_Input_SelectTile	; 1=select tile
+	.dw chrView_Input_SelectColor	; 2=select color
+	.dw chrView_Input_EditTile		; 3=edit tile
+	.dw chrView_Input_EditColors	; 4=COLORS
+	.dw chrView_Input_SwapColors	; 5=SWAPCOL
+	.dw chrView_Input_Options		; 6=options
+	.dw chrView_Input_ChrBank		; 7=CHRBANK
+
+;------------------------------------------------------------------------------;
+chrView_Input_MainMenu:
+	lda pad1State
+	and #PAD_A
+	beq @checkSelect
+
+	; A button: select option
+
+@checkSelect:
+	lda pad1State
+	and #PAD_SELECT
+	beq @checkDirs
+	; Select button: switch to ???
+
+@checkDirs:
+	; U/D/L/R: move cursor
+	lda pad1State
+	; which direction are we checking first?
+
+@end:
+	rts
+
+;------------------------------------------------------------------------------;
+chrView_Input_SelectTile:
+	lda pad1State
+	and #PAD_A
+	beq @checkSelect
+
+	; A button: select tile
+
+@checkSelect:
+	lda pad1State
+	and #PAD_SELECT
+	beq @checkDirs
+	; Select button: switch to ???
+
+@checkDirs:
+	; U/D/L/R: move cursor
+
+@end:
+	rts
+
+;------------------------------------------------------------------------------;
+chrView_Input_SelectColor:
+	; L/R: change color to use
+	; U/D:
+	; A button: select color, switch to tile editor
+	; Select button: switch to ???
+
+	rts
+
+;------------------------------------------------------------------------------;
+chrView_Input_EditTile:
+	; U/D/L/R: move cursor
+	; A button: Place color
+	; B button: ???
+	; Select button: switch to ???
+
+	rts
+
+;------------------------------------------------------------------------------;
+chrView_Input_EditColors:
+	; (tbd)
+	; B button: either cancel or exit
+
+	rts
+
+;------------------------------------------------------------------------------;
+chrView_Input_SwapColors:
+	; (tbd)
+	; B button: either cancel or exit
+
+	rts
+
+;------------------------------------------------------------------------------;
+chrView_Input_Options:
+	; (tbd)
+
+	rts
+
+;------------------------------------------------------------------------------;
+chrView_Input_ChrBank:
+	; in normal mode, we just swap the character banks.
+	; on other mappers, this should bring up a menu, but that's down the road.
+
 	rts
 
 ;==============================================================================;
@@ -192,9 +301,23 @@ chrView_InitDisplay:
 	sta PPU_DATA
 	ldx #$09
 	stx PPU_DATA
+
 	; 16 more of A
+	ldy #16
+@botFrameLoop1:
+	sta PPU_DATA
+	dey
+	bpl @botFrameLoop1
+
 	; one more X
+	stx PPU_DATA
+
 	; final 13 A
+	ldy #13
+@botFrameLoop2:
+	sta PPU_DATA
+	dey
+	bpl @botFrameLoop2
 
 	; main menu
 
