@@ -63,7 +63,7 @@ OAM_BUF = $0200 ; unless otherwise specified...
 ; $0700/nesmon
 ; This page is reserved for nesmon.
 
-.enum $0700
+.enum $0700 ; (used: 82/128 bytes)
 	;--------------------------------------------------------------------------;
 	; [reset detection] { 6 bytes }
 	resetStringBuf      .dsb 6		; reset detection string
