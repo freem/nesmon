@@ -106,11 +106,60 @@ There may be other versions in the future. Some are on more realistic boards
 and can be added easily, others will require different branches.
 
 Candidates, in no particular order:
-* Famicom Disk System (requires Disk System RAM cart)
+* Famicom Disk System (Disk System's RAM cart gives 32KB of PRG-RAM at $6000-$DFFF)
 * MMC1 (bankswitchable PRG-RAM, up to 32K)
-* MMC5 (can map $6000-$DFFF to WRAM; hard to source the MMC5 ICs)
+* MMC5 (64KB of PRG-RAM, can map $6000-$DFFF to PRG-RAM; MMC5 ICs hard to source)
 * MMC6 (1KB PRG-RAM at $7000-$7FFF)
 * UxROM with PRG-RAM circuit
+* VRC7 (Similar PRG/CHR banking setup to FME-7, but only 8K of PRG-RAM)
+
+2.4.1 Famicom Disk System
+-------------------------
+The main problem is that the FDS BIOS sits at $E000-$FFFF, and the monitor will
+need to sit slightly above that. At nesmon's full size (16K), that's half of the
+available PRG-RAM space, which is less than ideal.
+
+Since a Disk System version would need a different codebase anyways, some of
+nesmon's code could be replaced with calls to the relevant FDS BIOS routines.
+
+2.4.2 MMC1
+----------
+The MMC1 allows you to have up to 32K of PRG-RAM (banked in 8KB sections).
+However, there are only 6 games with 32K of PRG-RAM, and only one of those was
+released outside of Japan. (Technically it's five games, as "Sangokushi II" and
+"Romance of the Three Kingdoms II" are the Japanese/English versions.)
+
+If you don't want to chop up a Koei cart, your options are even more slim...
+Modifying a "Final Fantasy I & II" cart or "The Best Play Pro Yakyuu Special"
+are the only other choices.
+
+2.4.3 MMC5
+----------
+This is another category where Koei games dominate the list of real carts. MMC5
+is also the board that all non-Japanese releases of "Castlevania III" are on.
+
+"MMC5 ICs hard to source" is noted above. As far as I know, there are no
+hardware clones of the MMC5 available for use on carts. Some flashcarts can run
+MM5 games (with varying levels of support).
+
+Not mentioned above is the 1KB of EXRAM, which can be used for program code
+or data. However, it can also be used for other purposes.
+
+The ability to map PRG-RAM from $6000-$DFFF makes the MMC5 a decent substitute
+for a FDS RAM adaptor cart.
+
+2.4.4 MMC6
+----------
+This is a highly unlikely candidate, but it's listed here for completion.
+
+2.4.5 UxROM with PRG-RAM circuit
+--------------------------------
+An alternative to the NROM with CHR-RAM setup.
+
+2.4.6 VRC7
+----------
+(todo)
+
 
 ================================================================================
 3. Usage
