@@ -39,7 +39,14 @@
 
 .enum $0020
 	; $20-$2x: Controller inputs
-	
+	pad1State           .dsb 1		; (cur_keys)
+	pad1Trigger         .dsb 1		; (new_keys)
+	pad2State           .dsb 1		; (cur_keys)
+	pad2Trigger         .dsb 1		; (new_keys)
+	pad1Repeat          .dsb 1		; (das_keys)
+	pad2Repeat          .dsb 1		; (das_keys)
+	pad1Timer           .dsb 1		; (das_timer)
+	pad2Timer           .dsb 1		; (das_timer)
 .ende
 
 ;==============================================================================;
