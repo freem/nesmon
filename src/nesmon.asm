@@ -100,9 +100,9 @@ resetString: .db "nesmon"
 .include "routines_io.asm"
 .include "routines_wram.asm"
 
-;------------------------------------------------------------------------------;
+;==============================================================================;
 ; general nesmon routines
-;------------------------------------------------------------------------------;
+;==============================================================================;
 ; nesmon_ClearModuleRAM
 ; Clears Module RAM. Should be called in every module's init routine, unless
 ; that routine is meant to modify Module RAM. :V
@@ -117,7 +117,7 @@ nesmon_ClearModuleRAM:
 	bne @clearModuleRam
 	rts
 
-;------------------------------------------------------------------------------;
+;==============================================================================;
 ; keyboard routines
 .include "input/keyboard.inc"
 .include "input/kb_soft.asm" ; always include software keyboard
@@ -139,7 +139,7 @@ nesmon_ClearModuleRAM:
 	.endif
 .endif
 
-;------------------------------------------------------------------------------;
+;==============================================================================;
 ; [nesmon default modules]
 ; --editor--
 .include "modules/editor.asm"    ; editor program (main interface)
@@ -163,6 +163,4 @@ nesmon_ClearModuleRAM:
 .org $FFFA
 	.dw NMI ; NMI
 	.dw Reset ; Reset
-	.dw IRQ ; IRQ (Monitor!)
-
-;==============================================================================;
+	.dw IRQ ; IRQ (Monitor entry!)
