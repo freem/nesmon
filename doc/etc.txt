@@ -5,15 +5,16 @@ http://forums.nesdev.com/viewtopic.php?t=894
 
 blargg's NES boot loader
 http://slack.net/~ant/old/nes-code/bootloader/
+http://forums.nesdev.com/viewtopic.php?f=2&t=6941   - boot loader spec
 
 nesdev threads of interest
-http://forums.nesdev.com/viewtopic.php?f=2&t=11518
-http://forums.nesdev.com/viewtopic.php?f=9&t=10944
-http://forums.nesdev.com/viewtopic.php?f=9&t=10905
-http://forums.nesdev.com/viewtopic.php?f=9&t=10685
-http://forums.nesdev.com/viewtopic.php?f=9&t=7135
-http://forums.nesdev.com/viewtopic.php?f=9&t=7140
-http://forums.nesdev.com/viewtopic.php?f=9&t=6969
-http://forums.nesdev.com/viewtopic.php?f=2&t=7015
-http://forums.nesdev.com/viewtopic.php?f=2&t=6941
-http://forums.nesdev.com/viewtopic.php?f=9&t=6716
+http://forums.nesdev.com/viewtopic.php?f=2&t=11518  - Sending data to NES through controller port
+http://forums.nesdev.com/viewtopic.php?f=9&t=10944  - Serial bootloader: which input bits?
+http://forums.nesdev.com/viewtopic.php?f=9&t=10905  - Minimal built-in bootloader...
+http://forums.nesdev.com/viewtopic.php?f=9&t=10685  - Cheapest bidi interface?
+http://forums.nesdev.com/viewtopic.php?f=9&t=7135   - Game Genie ROM replacement
+http://forums.nesdev.com/viewtopic.php?f=9&t=7140   - Powerpak Lite internals doc?
+http://forums.nesdev.com/viewtopic.php?f=9&t=6969   - NES to PC link cable standard
+http://forums.nesdev.com/viewtopic.php?f=2&t=7015   - romless NES program format
+http://forums.nesdev.com/viewtopic.php?f=9&t=6716   - low cost devcart
+http://forums.nesdev.com/viewtopic.php?f=9&t=7520   - PC -> PowerPak transfer software

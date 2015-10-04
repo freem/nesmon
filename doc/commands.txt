@@ -169,3 +169,15 @@ Will write the three bytes $08, $04, and $02 to $0300.
 ================================================================================
 This command is similar to R, but it fills the next input line with the register
 values for easier editing.
+
+
+================================================================================
+[Configuration-Specific Commands]
+The following commands are only included in certain versions of the monitor.
+================================================================================
+
+================================================================================
+@ (Disk Access)
+================================================================================
+Only available on Famicom Disk System version.
+(Specifics are still unknown)

@@ -33,6 +33,7 @@ T              transfer memory block
 X              quit monitor
 >              modify memory
 ;              show registers and prepare next line for editing them
+@              disk commands (FDS version only)
 
 --------------------------------------------------------------------------------
 [unsure command list]
