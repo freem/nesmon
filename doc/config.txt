@@ -1,0 +1,18 @@
+nesmon Configuration
+====================
+The src directory has a file called "config.inc", which houses a few settings
+that can be changed before assembling nesmon.
+
+Right now, the configuration options are limited to color schemes.
+
+
+DEFAULT_COLOR_BG
+----------------
+(Default value: $0F)
+Default background color.
+
+
+DEFAULT_COLOR_TEXT
+----------------
+(Default value: $30)
+Default text color.

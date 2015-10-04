@@ -33,6 +33,7 @@ modules/               nesmon Modules
 	microasm.asm       Micro 6502 Assembler
 	tapemod.asm        Cassette tape routines
 
+config.inc             nesmon Configuration file
 datetime.lua           Lua script for generating "datetime.bin"
 irq.asm                IRQ/BRK handler (pretty important in a monitor program)
 Makefile               GNU makefile for creating the project

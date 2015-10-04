@@ -167,42 +167,43 @@ Reset:
 	sty PPU_ADDR
 
 	; BG1
-	lda #$0F			; black
-	ldx #$30			; white
+	lda #DEFAULT_COLOR_BG
+	ldx #DEFAULT_COLOR_TEXT
 	sta PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
 
-	; BG2
-	ldx #$16
+	; BG2 (temporary)
+	ldx #$16			; red
 	sta PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
 
-	; BG3
+	; BG3 (temporary)
 	sta PPU_DATA
 	sty PPU_DATA
 	sty PPU_DATA
 	sty PPU_DATA
 
-	; xxx: BG4 and sprite pals are temporary
-	ldx #$30
-
-	; I would rather keep Y as 0...
-	; (POSSIBLE SPACE OPTIMIZATION POINT)
-.rept 5
+	; BG4 (temporary)
+	ldx #DEFAULT_COLOR_TEXT
 	sta PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
-.endr
 
-	; (the following parts assume Y is 0)
+	; Sprite 1 (temporary)
+	ldx #DEFAULT_COLOR_TEXT
+	sta PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
 
 	; reset ppu addresses
 	ldx #$3F
+	ldy #$00
 	stx PPU_ADDR
 	sty PPU_ADDR
 	sty PPU_ADDR

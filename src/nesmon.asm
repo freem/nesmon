@@ -7,6 +7,9 @@
 .include "ram.inc"
 .include "opcodes.inc"
 
+; nesmon configuration
+.include "config.inc"
+
 ;==============================================================================;
 ; ROM header(s)
 
