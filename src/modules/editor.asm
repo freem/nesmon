@@ -84,6 +84,7 @@ editor_Init:
 
 	lda #1
 	sta runNormalVBuf
+	jsr ppu_WaitVBL
 
 	; --cursor (visual)--
 	; reset cursor cell
@@ -100,6 +101,19 @@ editor_Init:
 	lda #0
 	sta edcurBlink
 	sta timer1
+
+	; --software keyboard--
+	jsr vramBuf_Init
+
+	lda #$22
+	ldx #$20
+	sta softkbPos
+	stx softkbPos+1
+	jsr softkb_Show
+
+	lda #1
+	sta runNormalVBuf
+	jsr ppu_WaitVBL
 
 	; execution falls through
 ;==============================================================================;
