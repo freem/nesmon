@@ -11,6 +11,8 @@
 ; Routine naming: editor_*
 ;==============================================================================;
 .ignorenl
+	; module variables (todo)
+
 	; cursor defines
 	CURSOR_SPRITE_Y = OAM_BUF+4
 	CURSOR_SPRITE_TILE = OAM_BUF+5
@@ -26,9 +28,10 @@
 ; Setup for the editor module
 
 editor_Init:
-	; TEMPORARY
+	; TEMPORARY HACK
 	lda #1
 	sta activeKBType
+	; end TEMPORARY HACK
 
 	; --system variable initialization--
 	lda #0
@@ -63,6 +66,7 @@ editor_Init:
 	lda #15
 	jsr vramBuf_AddFromPtr
 
+	; build date
 	ldx #$20
 	ldy #$31
 	lda #14
@@ -113,7 +117,7 @@ editor_MainLoop:
 	; --after vblank--
 	inc timer1
 	lda timer1
-	cmp #20					; this value subject to change
+	cmp #20					; this value subject to change (currently 1/3 of 60)
 	bne @noBlinking
 
 	; reset timer
@@ -128,6 +132,21 @@ editor_MainLoop:
 	jsr editor_GetInput		; get input for next frame
 
 	jmp editor_MainLoop
+
+;==============================================================================;
+; editor_GetCursorPos
+; Returns the PPU address of the cursor's current position
+
+editor_GetCursorPos:
+	; in the basic case, it goes like this:
+	; addr = $2000
+	; addr += edcurDispX+1 ; easy
+	; addr += (edcurDispY * $20; <<5) ; need to account for upper NT addr
+
+	; say you're on row 8; 8<<5 is 256.
+	; You need to be able to store 4 bits of the overflow
+
+	rts
 
 ;==============================================================================;
 ; editor_PrintLine
@@ -169,6 +188,7 @@ editor_UpdateCursorSprite:
 	sta CURSOR_SPRITE_TILE
 
 	; sprite attributes
+	; todo: hide sprite behind letter when on non-solid frame?
 	lda #%00000000
 	sta CURSOR_SPRITE_ATTR
 
@@ -187,7 +207,8 @@ editor_GetInput:
 	bne @hwKeyboard
 
 	; --software keyboard input--
-	rts
+	; sw keyboard input relies on the joypad input, which is why it's read first
+	jmp softkb_Input
 
 @hwKeyboard:
 	; --hardware keyboard input--
@@ -216,6 +237,7 @@ editor_GetInput:
 
 editor_HandleInput:
 	; oh boy this is going to be fun!
+
 	; --joypad--
 	; we only need a few things here
 
