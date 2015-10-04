@@ -35,19 +35,274 @@ KBSignature_Soft:
 	.db $00 ; driver version number
 
 ;==============================================================================;
+; keyboard strings
+str_SoftKB_Row1:
+	.db "1 2 3 4 5 6 7 8 9 0 - = BKSP"
+str_SoftKB_Row2:
+	.db " Q W E R T Y U I O P [ ] ",$5C
+str_SoftKB_Row3:
+	.db "  A S D F G H J K L ; ' ENTR"
+str_SoftKB_Row4:
+	.db "FN Z X C V B N M , . / SHIFT"
+str_SoftKB_Row5:
+	.db "ESC  CTRL  SPACE  ALT  CLOSE"
+
+str_SoftKB_Row1Shift:
+	.db "! @ # $ % ^ & * ( ) _ + BKSP"
+
+;==============================================================================;
 softkb_Show:
 	; run after holding A+B for 3 seconds, or when no hardware keyboard found
 
 	; softkbPos has base nametable address
+
+	; top line
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$08
+	jsr vramBuf_AddByte
+
+	; row 1
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	clc
+	adc #$22
+	sta tmp01
+
+	lda #28
+	sta tmp02
+	jsr vramBuf_NewEntry
+
+	lda #<str_SoftKB_Row1
+	ldx #>str_SoftKB_Row1
+	sta tmp00
+	stx tmp01
+	lda #28
+	jsr vramBuf_AddFromPtr
+
+	; row 2
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	clc
+	adc #$62
+	sta tmp01
+
+	lda #26
+	sta tmp02
+	jsr vramBuf_NewEntry
+
+	lda #<str_SoftKB_Row2
+	ldx #>str_SoftKB_Row2
+	sta tmp00
+	stx tmp01
+	lda #26
+	jsr vramBuf_AddFromPtr
+
+	; need to flush buffer to screen before setting up next rows
+	lda #1
+	sta runNormalVBuf
+	jsr ppu_WaitVBL
+	jsr vramBuf_Init
+
+	; row 3
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	clc
+	adc #$A2
+	sta tmp01
+
+	lda #28
+	sta tmp02
+	jsr vramBuf_NewEntry
+
+	lda #<str_SoftKB_Row3
+	ldx #>str_SoftKB_Row3
+	sta tmp00
+	stx tmp01
+	lda #28
+	jsr vramBuf_AddFromPtr
+
+	; row 4
+	clc
+	lda softkbPos
+	adc #1
+	sta tmp00
+	lda softkbPos+1
+	adc #$E2
+	sta tmp01
+
+	lda #28
+	sta tmp02
+	jsr vramBuf_NewEntry
+
+	lda #<str_SoftKB_Row4
+	ldx #>str_SoftKB_Row4
+	sta tmp00
+	stx tmp01
+	lda #28
+	jsr vramBuf_AddFromPtr
+
+	; need to flush buffer to screen again before setting up final rows
+	lda #1
+	sta runNormalVBuf
+	jsr ppu_WaitVBL
+	jsr vramBuf_Init
+
+	; row 5
+	clc
+	lda softkbPos
+	adc #1
+	sta tmp00
+	lda softkbPos+1
+	adc #$22
+	sta tmp01
+
+	lda #28
+	sta tmp02
+	jsr vramBuf_NewEntry
+
+	lda #<str_SoftKB_Row5
+	ldx #>str_SoftKB_Row5
+	sta tmp00
+	stx tmp01
+	lda #28
+	jsr vramBuf_AddFromPtr
+
+	; bottom line
+	clc
+	lda softkbPos
+	adc #1
+	sta tmp00
+	lda softkbPos+1
+	adc #$40
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$08
+	jsr vramBuf_AddByte
 
 	rts
 
 ;==============================================================================;
 softkb_Hide:
 	; typically run on selecting "Close" (or by typing on hardware keyboard?)
+	jsr vramBuf_Init
 
 	; softkbPos has base nametable address
-	; clear out the rows
+
+	; first row
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$00
+	jsr vramBuf_AddByte
+
+	; second row
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	clc
+	adc #$20
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$00
+	jsr vramBuf_AddByte
+
+	; third row
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	clc
+	adc #$60
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$00
+	jsr vramBuf_AddByte
+
+	; this is the maximum amount we can transfer before running into problems
+	lda #1
+	sta runNormalVBuf
+	jsr ppu_WaitVBL
+
+	; fourth row
+	lda softkbPos
+	sta tmp00
+	lda softkbPos+1
+	clc
+	adc #$A0
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$00
+	jsr vramBuf_AddByte
+
+	; fifth row
+	clc
+	lda softkbPos
+	adc #1
+	sta tmp00
+	lda #0
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$00
+	jsr vramBuf_AddByte
+
+	; sixth row
+	clc
+	lda softkbPos
+	adc #1
+	sta tmp00
+	lda softkbPos+1
+	adc #$20
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$00
+	jsr vramBuf_AddByte
+
+	; running into the limit again
+	lda #1
+	sta runNormalVBuf
+	jsr ppu_WaitVBL
+
+	; last row
+	clc
+	lda softkbPos
+	adc #1
+	sta tmp00
+	lda softkbPos+1
+	adc #$40
+	sta tmp01
+	lda #$80|32
+	sta tmp02
+	jsr vramBuf_NewEntry
+	lda #$00
+	jsr vramBuf_AddByte
+
+	lda #1
+	sta runNormalVBuf
+	jsr ppu_WaitVBL
 
 	rts
 
@@ -56,6 +311,11 @@ softkb_Redraw:
 	; called on toggling Shift
 
 	; softkbPos has base nametable address
+
+	; row 1 needs to change
+	
+
+	; five other keys need to get changed (; ' , . / become : " < > ?)
 
 	rts
 
