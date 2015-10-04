@@ -125,6 +125,9 @@ editor_MainLoop:
 	jsr editor_HandleInput	; handle input
 	jsr editor_UpdateCursorSprite
 
+	; update software keyboard cursor or whatever
+	jsr softkb_Update
+
 	; --vblank--
 	jsr ppu_WaitVBL
 
@@ -221,7 +224,7 @@ editor_GetInput:
 	bne @hwKeyboard
 
 	; --software keyboard input--
-	; sw keyboard input relies on the joypad input, which is why it's read first
+	; soft keyboard input relies on the joypad input
 	jmp softkb_Input
 
 @hwKeyboard:
@@ -257,7 +260,7 @@ editor_HandleInput:
 
 	; --software keyboard--
 @handleInput_SoftKB:
-	
+	;jsr softkb_Input
 
 	; --hardware keyboard--
 @handleInput_HWKB:
