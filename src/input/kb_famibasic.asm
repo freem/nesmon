@@ -46,9 +46,6 @@ kbHVC007_Reset:
 ; kbHVC007_GetKeys
 ; Reads input from the keyboard and stores it in hardkbKeyStatus.
 
-; Does not perform any transformation on the values, so a pressed key will have
-; a bit value of 0, and an inactive key will be 1.
-
 kbHVC007_GetKeys:
 	; prepare keyboard
 	lda #%00000101
@@ -90,6 +87,7 @@ kbHVC007_GetKeys:
 	asl
 	and #$F0
 	ora hardkbKeyStatus,x
+	eor #$FF				; flip bits so that 1=down,0=up
 	sta hardkbKeyStatus,x
 
 	; check if we're done
