@@ -194,8 +194,15 @@ Reset:
 	stx PPU_DATA
 	stx PPU_DATA
 
-	; Sprite 1 (temporary)
+	; Sprite 1 (text cursor)
 	ldx #DEFAULT_COLOR_TEXT
+	sta PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
+	stx PPU_DATA
+
+	; Sprite 2 (software keyboard cursor)
+	ldx #DEFAULT_COLOR_SOFTKEY_CURSOR
 	sta PPU_DATA
 	stx PPU_DATA
 	stx PPU_DATA
