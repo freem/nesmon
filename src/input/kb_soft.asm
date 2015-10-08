@@ -259,7 +259,12 @@ softkb_Show:
 softkb_Hide:
 	; typically run on selecting "Close" (or by typing on hardware keyboard?)
 
-	; hide cursor (spr.2-5)
+	; hide cursor
+	lda #$F8
+	sta SOFTKB_CURSOR_SPR1
+	sta SOFTKB_CURSOR_SPR2
+	sta SOFTKB_CURSOR_SPR3
+	sta SOFTKB_CURSOR_SPR4
 
 	; hide keyboard
 	jsr vramBuf_Init
@@ -592,7 +597,7 @@ softkb_HandleCursor:
 	beq @softKB_CheckDirDown
 
 	; softkey cursor up
-	; this code is mostly good. could stand to have some overrides on the last row
+	; code is mostly good, but could stand to have overrides on the last row
 	lda softkbY
 	bne @cursorUp
 
@@ -623,7 +628,7 @@ softkb_HandleCursor:
 	beq @softKB_CheckDirLeft
 
 	; softkey cursor down
-	; this code is mostly good, but needs to use data from tbl_softkbRowMaxItems
+	; code is mostly good, but could stand to have overrides on the last row
 	lda softkbY
 	cmp #4
 	bne @cursorDown
