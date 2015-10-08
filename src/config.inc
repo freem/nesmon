@@ -11,7 +11,7 @@
 ; +-----------------------------+
 
 ; color schemes (BG,Text,softkey cursor)
-; default:            $0F,$30,$22 (black BG, white text, purple softkey cursor)
+; default:            $0F,$30,$22 (black BG, white text, blue/purple softkey cursor)
 ; inverted:           $30,$0F,$12 (white BG, black text, darker purple softkey cursor)
 ; c64 style:          $12,$32,$02 or $02,$22,$32
 ; light green/black:  $0F,$3A,$2A
