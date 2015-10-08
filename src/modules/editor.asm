@@ -105,7 +105,8 @@ editor_Init:
 	; --software keyboard--
 	jsr vramBuf_Init
 
-	lda #$22
+	; temporary shoving this off-screen (was $2220)
+	lda #$26
 	ldx #$20
 	sta softkbPos
 	stx softkbPos+1
@@ -125,9 +126,12 @@ editor_MainLoop:
 	jsr editor_HandleInput	; handle input
 	jsr editor_UpdateCursorSprite
 
+	lda activeKBType
+	bne @skipSoftKBUpdate
 	; update software keyboard cursor or whatever
 	jsr softkb_Update
 
+@skipSoftKBUpdate:
 	; --vblank--
 	jsr ppu_WaitVBL
 
