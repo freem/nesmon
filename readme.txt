@@ -205,7 +205,7 @@ With GNU Make, the process is simple:
 
 5) Run one of the following commands:
  5.1) "make all" (or just "make")
- This will build all of the targets mentioned below (aside from clear)
+ This will build all of the targets mentioned below (aside from clean)
 
  5.2) "make nrom"
  This will create an NROM configuration of nesmon.
